@@ -25,7 +25,6 @@ class String
   end
 end
 
-
 class Cube
   attr_accessor :cube, :base
 
@@ -45,6 +44,17 @@ class Cube
     @cube[2].map! {|color| color.to_s.yellow}
     @cube[5].map! {|color| color.to_s.blue}
     @cube[1].map! {|color| color.to_s.orange}
+  end
+
+  def invert
+    cubetemp = []
+    cubetemp[0] = @cube[5]
+    cubetemp[1] = @cube[4]
+    cubetemp[2] = @cube[3]
+    cubetemp[3] = @cube[2]
+    cubetemp[4] = @cube[1]
+    cubetemp[5] = @cube[0]
+    @cube = cubetemp
   end
 
   def solve
@@ -361,6 +371,8 @@ move = gets.chomp
 moves << move
 x.scramble if move == "scramble"
 x.solve if move == "solve"
+x.invert if move == "invert"
+x.cross if move == "cross"
 
 x = Cube.new if move == "reset"
 moves = [] if move == "reset" || move == "scramble"
@@ -405,6 +417,10 @@ if move == "help"
   puts "  scramble - scrambles the cube randomly"
   puts "  , - undoes the last move"
   puts "  . - Vimtastically repeats the last move you made"
+  puts "  <CTRL-c> - to quit"
+  puts
+  puts "Press Enter to continue..."
+
   moves.pop
   gets
 end
