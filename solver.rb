@@ -42,12 +42,20 @@ class Cube
 
   def colorize
     @cube.each do |this|
-      this.map! do |num|
-        num.to_s.orange if num == 1
-        num.to_s.yellow if num == 2
-        num.to_s.red if num == 3
-        num.to_s.green if num == 4
-        num.to_s.blue if num ==5
+      this.collect! do |num|
+        if num ==1
+          num = num.to_s.orange
+        elsif num == 2
+          num = num.to_s.yellow
+        elsif num ==3
+          num = num.to_s.red
+        elsif num == 4
+          num = num.to_s.green
+        elsif num ==5 
+          num = num.to_s.blue
+        else
+          num = num
+        end
       end
     end
     self
@@ -516,6 +524,4 @@ end
 x = Cube.new
 x.scramble
 system("clear")
-x.print
-x.colorize.print
-#x.cross_solve.corners_solve.second_layer_solve.print
+x.cross_solve.corners_solve.second_layer_solve.colorize.print
