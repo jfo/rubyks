@@ -38,12 +38,19 @@ class Cube
 
     @cube = [white,orange,yellow,red,green,blue]
     @base = Marshal.load(Marshal.dump(@cube))
+  end
 
-    @cube[4].map! {|color| color.to_s.green}
-    @cube[3].map! {|color| color.to_s.red}
-    @cube[2].map! {|color| color.to_s.yellow}
-    @cube[5].map! {|color| color.to_s.blue}
-    @cube[1].map! {|color| color.to_s.orange}
+  def colorize
+    @cube.each do |this|
+      this.map! do |num|
+        num.to_s.orange if num == 1
+        num.to_s.yellow if num == 2
+        num.to_s.red if num == 3
+        num.to_s.green if num == 4
+        num.to_s.blue if num ==5
+      end
+    end
+    self
   end
 
   def invert
@@ -92,7 +99,7 @@ class Cube
       i += 1
 
       if i > 100   
-        self.cross_swap.print
+        self.cross_swap
         i = 1
       end
     end
@@ -108,7 +115,7 @@ class Cube
   def corners_solve
     corners = []
 
-  i = 1
+    i = 1
     until @cube[0].uniq == [0]
       corners = [@cube[1][8],@cube[1][2],@cube[2][4],@cube[2][2],@cube[3][4],@cube[3][6],@cube[4][6],@cube[4][8]]
       until corners.include?(0)
@@ -118,19 +125,16 @@ class Cube
       
       until @cube[3][6] == 0 || @cube[4][6] == 0
         self.d
-        puts "derf"
       end
 
       if @cube[3][6] == 0
         self.d.turn until @cube[5][4] == @cube[3][0]
-        puts "dorp" 
-        self.rr.dr.r.print
+        self.rr.dr.r
       end
 
       if @cube[4][6] == 0
         self.d.turn until @cube[5][4] == @cube[4][0]
-        puts "derp"
-        self.f.d.fr.print
+        self.f.d.fr
       end
       i += 1
       self.turn
@@ -143,9 +147,14 @@ class Cube
         i = 1
       end
     end
+    self
+  end
 
-   self.print
-
+  def second_layer_solve
+    self.turn
+    puts @cube[1][0]
+    puts @cube[1][0] == 3
+    self
   end
 
   def cross_swap
@@ -218,7 +227,6 @@ class Cube
     @cube = cubetemp
     self
   end
-
 
   def l
     cubetemp = Marshal.load(Marshal.dump(@cube))
@@ -507,5 +515,7 @@ end
 
 x = Cube.new
 x.scramble
-
-x.cross_solve.corners_solve
+system("clear")
+x.print
+x.colorize.print
+#x.cross_solve.corners_solve.second_layer_solve.print
