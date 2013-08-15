@@ -23,6 +23,7 @@ class String
   def orange 
     colorize(36)
   end
+
 end
 
 class Cube
@@ -124,13 +125,11 @@ class Cube
     self
   end
 
-  def test
-    loop do
-      self.show
-    end
+  def cross_swap
+      self.rr.u.u.r.u.rr.u.r.u.print
   end
 
-  def cross 
+  def cross_solve 
     downcross = []
     until @cube[0][1] == 0 && @cube[0][3] == 0 && @cube[0][5] == 0 && @cube[0][7] == 0
          
@@ -146,12 +145,13 @@ class Cube
       until @cube[0][7] != 0
         self.u
       end
-
      self.f.f
      downcross = []
     end
-    puts "yatta!"
-    self.print
+self.print
+    
+
+
   end
 
   def l
@@ -441,4 +441,5 @@ end
 
 x = Cube.new
 x.scramble
-x.cross
+
+x.cross_solve
