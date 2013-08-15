@@ -23,7 +23,6 @@ class String
   def orange 
     colorize(36)
   end
-
 end
 
 class Cube
@@ -56,6 +55,101 @@ class Cube
     cubetemp[4] = @cube[1]
     cubetemp[5] = @cube[0].reverse
     @cube = cubetemp
+  end
+
+  def cross_solve 
+    downcross = []
+    i = 1
+    until @cube[0][1] == 0 && @cube[0][3] == 0 && @cube[0][5] == 0 && @cube[0][7] == 0
+         
+      until downcross.include?(0) 
+         downcross = []
+         self.rr.d.r.l.dr.lr.turn
+         downcross = [@cube[5][1],@cube[5][3],@cube[5][5], @cube[5][7]]
+         i += 1
+         if i > 100
+           self.turn until @cube[0][1] != 0
+           self.l.b 
+           i = 1
+         end
+      end
+
+      until @cube[5][3] == 0
+        self.d
+      end
+      until @cube[0][7] != 0
+        self.u
+      end
+     self.f.f
+     downcross = []
+    end
+
+    until @cube[4][3] == @cube[4][0] && @cube[1][5] == @cube[1][0]
+      until @cube[1][5] == @cube[1][0]        
+        self.u
+      end
+      self.turn if @cube[4][3] != @cube[4][0]
+      i += 1
+
+      if i > 100   
+        self.cross_swap.print
+        i = 1
+      end
+    end
+
+
+    if @cube[2][7] != @cube[2][0]
+      self.cross_swap
+    end
+
+    self
+  end
+
+  def corners_solve
+    corners = []
+
+  i = 1
+    until @cube[0].uniq == [0]
+      corners = [@cube[1][8],@cube[1][2],@cube[2][4],@cube[2][2],@cube[3][4],@cube[3][6],@cube[4][6],@cube[4][8]]
+      until corners.include?(0)
+        self.rr.d.r.turn
+        corners = [@cube[1][8],@cube[1][2],@cube[2][4],@cube[2][2],@cube[3][4],@cube[3][6],@cube[4][6],@cube[4][8]]
+      end
+      
+      until @cube[3][6] == 0 || @cube[4][6] == 0
+        self.d
+        puts "derf"
+      end
+
+      if @cube[3][6] == 0
+        self.d.turn until @cube[5][4] == @cube[3][0]
+        puts "dorp" 
+        self.rr.dr.r.print
+      end
+
+      if @cube[4][6] == 0
+        self.d.turn until @cube[5][4] == @cube[4][0]
+        puts "derp"
+        self.f.d.fr.print
+      end
+      i += 1
+      self.turn
+
+      if i > 50
+        self.u until @cube[0][6] != 0
+        self.d until @cube[5][4] == 0
+        self.lr.d.l
+        self.u until @cube[1][5] == @cube[1][0]
+        i = 1
+      end
+    end
+
+   self.print
+
+  end
+
+  def cross_swap
+    self.rr.u.u.r.u.rr.u.r.u
   end
 
   def turn 
@@ -125,34 +219,6 @@ class Cube
     self
   end
 
-  def cross_swap
-      self.rr.u.u.r.u.rr.u.r.u.print
-  end
-
-  def cross_solve 
-    downcross = []
-    until @cube[0][1] == 0 && @cube[0][3] == 0 && @cube[0][5] == 0 && @cube[0][7] == 0
-         
-      until downcross.include?(0) 
-         downcross = []
-         self.rr.d.r.l.dr.lr.turn
-         downcross = [@cube[5][1],@cube[5][3],@cube[5][5], @cube[5][7]]
-         puts "first"
-      end
-       until @cube[5][3] == 0
-        self.d
-      end
-      until @cube[0][7] != 0
-        self.u
-      end
-     self.f.f
-     downcross = []
-    end
-self.print
-    
-
-
-  end
 
   def l
     cubetemp = Marshal.load(Marshal.dump(@cube))
@@ -442,4 +508,4 @@ end
 x = Cube.new
 x.scramble
 
-x.cross_solve
+x.cross_solve.corners_solve
