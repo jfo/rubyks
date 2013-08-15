@@ -62,6 +62,9 @@ class Cube
   end
 
   def invert
+    self.turn until @cube[1][0] == 1
+    self.print
+    gets
     cubetemp = []
     cubetemp[0] = @cube[5].reverse
     cubetemp[1] = @cube[4]
@@ -70,6 +73,7 @@ class Cube
     cubetemp[4] = @cube[1]
     cubetemp[5] = @cube[0].reverse
     @cube = cubetemp
+    self
   end
 
   def cross_solve 
@@ -497,6 +501,7 @@ class Cube
   end
 
   def print
+    self.colorize
     puts "                    ---------"
     puts "                    |#{@cube[1][8]}||#{@cube[1][1]}||#{@cube[1][2]}|"
     puts "                    ---------"
@@ -524,4 +529,4 @@ end
 x = Cube.new
 x.scramble
 system("clear")
-x.cross_solve.corners_solve.second_layer_solve.colorize.print
+x.cross_solve.corners_solve.second_layer_solve.invert.print
