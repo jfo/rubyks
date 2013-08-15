@@ -62,16 +62,73 @@ class Cube
   end
 
   def invert
-    self.turn until @cube[1][0] == 1
-    self.print
-    gets
-    cubetemp = []
-    cubetemp[0] = @cube[5].reverse
-    cubetemp[1] = @cube[4]
-    cubetemp[2] = @cube[3]
-    cubetemp[3] = @cube[2]
-    cubetemp[4] = @cube[1]
-    cubetemp[5] = @cube[0].reverse
+    self.turn_over.turn_over
+    self
+  end
+
+  def turn_over 
+    cubetemp = [[],[],[],[],[],[]]
+
+    cubetemp[0][0] = @cube[3][0]
+    cubetemp[0][1] = @cube[3][1]
+    cubetemp[0][2] = @cube[3][2]
+    cubetemp[0][3] = @cube[3][3]
+    cubetemp[0][4] = @cube[3][4]
+    cubetemp[0][5] = @cube[3][5]
+    cubetemp[0][6] = @cube[3][6]
+    cubetemp[0][7] = @cube[3][7]
+    cubetemp[0][8] = @cube[3][8]
+
+    cubetemp[1][0] = @cube[0][0]
+    cubetemp[1][1] = @cube[0][1]
+    cubetemp[1][2] = @cube[0][2]
+    cubetemp[1][3] = @cube[0][3]
+    cubetemp[1][4] = @cube[0][4]
+    cubetemp[1][5] = @cube[0][5]
+    cubetemp[1][6] = @cube[0][6]
+    cubetemp[1][7] = @cube[0][7]
+    cubetemp[1][8] = @cube[0][8]
+
+    cubetemp[2][0] = @cube[2][0]
+    cubetemp[2][1] = @cube[2][7]
+    cubetemp[2][2] = @cube[2][8]
+    cubetemp[2][3] = @cube[2][1]
+    cubetemp[2][4] = @cube[2][2]
+    cubetemp[2][5] = @cube[2][3]
+    cubetemp[2][6] = @cube[2][4]
+    cubetemp[2][7] = @cube[2][5]
+    cubetemp[2][8] = @cube[2][6]
+
+    cubetemp[3][0] = @cube[5][0]
+    cubetemp[3][1] = @cube[5][5]
+    cubetemp[3][2] = @cube[5][6]
+    cubetemp[3][3] = @cube[5][7]
+    cubetemp[3][4] = @cube[5][8]
+    cubetemp[3][5] = @cube[5][1]
+    cubetemp[3][6] = @cube[5][2]
+    cubetemp[3][7] = @cube[5][3]
+    cubetemp[3][8] = @cube[5][4]
+
+    cubetemp[4][0] = @cube[4][0]
+    cubetemp[4][1] = @cube[4][3]
+    cubetemp[4][2] = @cube[4][4]
+    cubetemp[4][3] = @cube[4][5]
+    cubetemp[4][4] = @cube[4][6]
+    cubetemp[4][5] = @cube[4][7]
+    cubetemp[4][6] = @cube[4][8]
+    cubetemp[4][7] = @cube[4][1]
+    cubetemp[4][8] = @cube[4][2]
+
+    cubetemp[5][0] = @cube[1][0]
+    cubetemp[5][1] = @cube[1][5]
+    cubetemp[5][2] = @cube[1][6]
+    cubetemp[5][3] = @cube[1][7]
+    cubetemp[5][4] = @cube[1][8]
+    cubetemp[5][5] = @cube[1][1]
+    cubetemp[5][6] = @cube[1][2]
+    cubetemp[5][7] = @cube[1][3]
+    cubetemp[5][8] = @cube[1][4]
+
     @cube = cubetemp
     self
   end
@@ -163,9 +220,8 @@ class Cube
   end
 
   def second_layer_solve
-    self.turn
-    puts @cube[1][0]
-    puts @cube[1][0] == 3
+   
+
     self
   end
 
