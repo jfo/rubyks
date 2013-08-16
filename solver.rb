@@ -220,8 +220,42 @@ class Cube
   end
 
   def second_layer_solve
-   
 
+    self.invert
+    mids = []
+
+  #  until @cube[1][3] == @cube[1][0] && @cube[1][7] == @cube[1][0] && @cube[2][1] == @cube[2][0] && @cube[2][5] == @cube[2][0] && @cube[3][3] == @cube[3][0] && @cube[3][7] ==@cube[3][0] && @cube[4][1] == @cube[4][0] && @cube[4][5] == @cube[4][0]
+
+    until mids.include?(5) == false && @cube[1][7] == @cube[1][0] && @cube[3][3] == @cube[3][0] && @cube[3][7] == @cube[3][0] && @cube[1][3] == @cube[1][0]
+
+      until @cube[4][5] == @cube[4][0] && @cube[3][7] == @cube[3][0]
+      i = 0
+
+        until @cube[4][3] != 5 && @cube[0][7] != 5
+          self.u
+          i += 1
+
+          if i > 50
+            self.cross_swap
+            self.u.r.ur.rr.ur.fr.u.f
+            self.print
+            i = 1
+          end
+        end
+
+        until @cube[4][3] == @cube[4][0]
+          self.ur.turn
+        end
+
+        if @cube[0][7] != @cube[3][0]
+          self.cross_swap
+        end
+        self.u.r.ur.rr.ur.fr.u.f
+      end
+      self.turn
+      mids = [@cube[1][3],@cube[1][7],@cube[2][1],@cube[2][5],@cube[3][3],@cube[3][7],@cube[4][1],@cube[4][5]]
+    end
+    p mids
     self
   end
 
@@ -557,7 +591,7 @@ class Cube
   end
 
   def print
-    self.colorize
+    self
     puts "                    ---------"
     puts "                    |#{@cube[1][8]}||#{@cube[1][1]}||#{@cube[1][2]}|"
     puts "                    ---------"
@@ -582,7 +616,33 @@ class Cube
   end
 end
 
-x = Cube.new
-x.scramble
+
+loop do
+y =Time.now
 system("clear")
-x.cross_solve.corners_solve.second_layer_solve.invert.print
+x = Cube.new
+x.print
+
+
+system("clear")
+x.scramble
+#x.print
+#gets
+
+system("clear")
+x.cross_solve#.corners_solve.second_layer_solve
+#x.print
+#gets
+
+system("clear")
+x.corners_solve
+#x.print
+#gets
+
+system("clear")
+x.second_layer_solve
+
+x.colorize.print
+puts Time.now - y
+gets
+end
