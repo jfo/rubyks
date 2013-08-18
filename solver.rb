@@ -36,18 +36,20 @@ class Cube
     self.scramble
   end
 
-#blech so far on this one
-#  def clean_hist
-#    i = 0
-#    @hist.each do |this|
-#      if @hist[i..i+3].uniq.length == 1
-#        4.times { @hist.delete(@hist[i])}
-#        i -=1
-#      end
-#      i += 1
-#    end
-#  end 
-#
+  #simply removes any 4 of the same move in a row in @hist. Any move repeated four times ends the cube in the state it started in.
+  def clean_hist
+    i = 0
+    p @hist.length
+    until i == @hist.length
+      if @hist[i] == @hist[i+1] && @hist[i] == @hist[i+2] && @hist[i] == @hist[i+3] 
+        4.times {@hist.delete_at(i)}
+        i = -1
+      end
+     i += 1
+    end
+    @hist.join(', ')
+  end 
+
 
   #basic motions, including turn and flip over
   def l
@@ -695,6 +697,7 @@ class Cube
 
   def solve
     self.cross_solve.corners_solve.second_layer_solve.top_cross.top_corners
+    self.clean_hist
     turn until @cube[1][0] == 1
     self.invert
   end
@@ -770,70 +773,7 @@ class Cube
   self
 end
 
-
-
-# i
 x = Cube.new
 x.solve
-p x.hist.join(', ')
-puts x.hist.length
-x.clean_hist
-puts "new"
-p x.hist.join(', ')
-
-puts x.hist.length
-
-
-
-
-
-
-#loop do
-#x = Cube.new
-#x.scramble
-#x.print
-#sleep(1)
-#x.cross_solve
-#x.print
-#sleep(1)
-#x.corners_solve
-#x.print
-#sleep(1)
-#x.second_layer_solve
-#x.invert.print
-#x.invert
-#sleep(1)
-#x.top_cross
-#x.invert.print
-#x.invert
-#
-#sleep(1)
-#x.top_corners
-#x.invert.print
-#x.invert
-#sleep(1)
-#x.invert.colorize.print
-#sleep(1)
-#end
-##
-#average = []
-#
-#i = 1
-#1000.times do
-#y =Time.now
-#x = Cube.new
-##system("clear")
-#x.scramble
-#x.solve
-##x.colorize
-##x.print
-#length = Time.now - y
-#
-#average << length
-#puts i
-#i+=1
-#puts average.inject(:+) / average.length
-#
-#puts Time.now
-#end
-#puts average
+x.print
+p x.hist
