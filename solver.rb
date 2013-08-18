@@ -36,11 +36,18 @@ class Cube
     self.scramble
   end
 
-  def clean_hist
-    @hist.each do |this|
-      
-  end 
-
+#blech so far on this one
+#  def clean_hist
+#    i = 0
+#    @hist.each do |this|
+#      if @hist[i..i+3].uniq.length == 1
+#        4.times { @hist.delete(@hist[i])}
+#        i -=1
+#      end
+#      i += 1
+#    end
+#  end 
+#
 
   #basic motions, including turn and flip over
   def l
@@ -769,6 +776,11 @@ end
 x = Cube.new
 x.solve
 p x.hist.join(', ')
+puts x.hist.length
+x.clean_hist
+puts "new"
+p x.hist.join(', ')
+
 puts x.hist.length
 
 
