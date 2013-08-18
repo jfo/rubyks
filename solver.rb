@@ -26,43 +26,339 @@ class String
 end
 
 class Cube
-  attr_accessor :cube, :base
+  attr_accessor :cube, :hist
+
+#initialized stuff should include state of cube, auto scramble maybe? how many moves have been performed and in what order. 
 
   def initialize
-    white = [0,0,0,0,0,0,0,0,0]
-    orange = [1,1,1,1,1,1,1,1,1]
-    yellow = [2,2,2,2,2,2,2,2,2]
-    red = [3,3,3,3,3,3,3,3,3]
-    green= [4,4,4,4,4,4,4,4,4]
-    blue = [5,5,5,5,5,5,5,5,5]
-
-    @cube = [white,orange,yellow,red,green,blue]
-    @base = Marshal.load(Marshal.dump(@cube))
+    @cube = [[0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1],[2,2,2,2,2,2,2,2,2],[3,3,3,3,3,3,3,3,3],[4,4,4,4,4,4,4,4,4],[5,5,5,5,5,5,5,5,5]]
+    @hist = []
+    self.scramble
   end
 
-  def colorize
-    @cube.each do |this|
-      this.collect! do |num|
-        if num ==1
-          num = num.to_s.orange
-        elsif num == 2
-          num = num.to_s.yellow
-        elsif num ==3
-          num = num.to_s.red
-        elsif num == 4
-          num = num.to_s.green
-        elsif num ==5 
-          num = num.to_s.blue
-        else
-          num = num
-        end
-      end
+  def clean_hist
+    @hist.each do |this|
+      
+  end 
+
+
+  #basic motions, including turn and flip over
+  def l
+    cubetemp = Marshal.load(Marshal.dump(@cube))
+
+    cubetemp[0][1] = @cube[2][1]
+    cubetemp[0][2] = @cube[2][2]
+    cubetemp[0][8] = @cube[2][8]
+
+    cubetemp[2][1] = @cube[5][1]
+    cubetemp[2][2] = @cube[5][2]
+    cubetemp[2][8] = @cube[5][8]
+
+    cubetemp[5][1] = @cube[4][1]
+    cubetemp[5][2] = @cube[4][2]
+    cubetemp[5][8] = @cube[4][8]
+
+    cubetemp[4][1] = @cube[0][1]
+    cubetemp[4][2] = @cube[0][2]
+    cubetemp[4][8] = @cube[0][8]
+
+
+    cubetemp[1][1] = @cube[1][7]
+    cubetemp[1][2] = @cube[1][8]
+    cubetemp[1][3] = @cube[1][1]
+    cubetemp[1][4] = @cube[1][2]
+    cubetemp[1][5] = @cube[1][3]
+    cubetemp[1][6] = @cube[1][4]
+    cubetemp[1][7] = @cube[1][5]
+    cubetemp[1][8] = @cube[1][6]
+
+    @cube = Marshal.load(Marshal.dump(cubetemp))
+    @hist << 'l'
+    self
+  end
+  def lr
+    3.times do 
+      self.l
+      @hist.pop
     end
+    @hist << 'lr'
     self
   end
 
-  def invert
-    self.turn_over.turn_over
+  def r
+    cubetemp = Marshal.load(Marshal.dump(@cube))
+
+    cubetemp[0][4] = @cube[4][4]
+    cubetemp[0][5] = @cube[4][5]
+    cubetemp[0][6] = @cube[4][6]
+
+    cubetemp[4][4] = @cube[5][4]
+    cubetemp[4][5] = @cube[5][5]
+    cubetemp[4][6] = @cube[5][6]
+
+    cubetemp[5][4] = @cube[2][4]
+    cubetemp[5][5] = @cube[2][5]
+    cubetemp[5][6] = @cube[2][6]
+
+    cubetemp[2][4] = @cube[0][4]
+    cubetemp[2][5] = @cube[0][5]
+    cubetemp[2][6] = @cube[0][6]
+
+    cubetemp[3][1] = @cube[3][7]
+    cubetemp[3][2] = @cube[3][8]
+    cubetemp[3][3] = @cube[3][1]
+    cubetemp[3][4] = @cube[3][2]
+    cubetemp[3][5] = @cube[3][3]
+    cubetemp[3][6] = @cube[3][4]
+    cubetemp[3][7] = @cube[3][5]
+    cubetemp[3][8] = @cube[3][6]
+
+    @hist << 'r'
+    @cube = Marshal.load(Marshal.dump(cubetemp))
+    self
+  end
+  def rr
+    3.times do 
+      self.r
+      @hist.pop
+    end
+    @hist << "rr"
+    self
+  end
+
+  def f
+    cubetemp = Marshal.load(Marshal.dump(@cube))
+
+    cubetemp[0][6] = @cube[1][6]
+    cubetemp[0][7] = @cube[1][7]
+    cubetemp[0][8] = @cube[1][8]
+
+    cubetemp[1][6] = @cube[5][2]
+    cubetemp[1][7] = @cube[5][3]
+    cubetemp[1][8] = @cube[5][4]
+
+    cubetemp[5][2] = @cube[3][6]
+    cubetemp[5][3] = @cube[3][7]
+    cubetemp[5][4] = @cube[3][8]
+
+    cubetemp[3][8] = @cube[0][8]
+    cubetemp[3][7] = @cube[0][7]
+    cubetemp[3][6] = @cube[0][6]
+
+    cubetemp[4][1] = @cube[4][7]
+    cubetemp[4][2] = @cube[4][8]
+    cubetemp[4][3] = @cube[4][1]
+    cubetemp[4][4] = @cube[4][2]
+    cubetemp[4][5] = @cube[4][3]
+    cubetemp[4][6] = @cube[4][4]
+    cubetemp[4][7] = @cube[4][5]
+    cubetemp[4][8] = @cube[4][6]
+
+    @hist << 'f'
+    @cube = Marshal.load(Marshal.dump(cubetemp))
+    self
+  end
+  def fr
+    3.times do 
+      self.f
+      @hist.pop
+    end
+    @hist << "fr"
+    self
+  end
+
+  def b
+    cubetemp = Marshal.load(Marshal.dump(@cube))
+
+    cubetemp[0][2] = @cube[3][2]
+    cubetemp[0][3] = @cube[3][3]
+    cubetemp[0][4] = @cube[3][4]
+
+    cubetemp[1][2] = @cube[0][2]
+    cubetemp[1][3] = @cube[0][3]
+    cubetemp[1][4] = @cube[0][4]
+
+    cubetemp[3][2] = @cube[5][6]
+    cubetemp[3][3] = @cube[5][7]
+    cubetemp[3][4] = @cube[5][8]
+
+    cubetemp[5][6] = @cube[1][2]
+    cubetemp[5][7] = @cube[1][3]
+    cubetemp[5][8] = @cube[1][4]
+
+
+
+    cubetemp[2][1] = @cube[2][7]
+    cubetemp[2][2] = @cube[2][8]
+    cubetemp[2][3] = @cube[2][1]
+    cubetemp[2][4] = @cube[2][2]
+    cubetemp[2][5] = @cube[2][3]
+    cubetemp[2][6] = @cube[2][4]
+    cubetemp[2][7] = @cube[2][5]
+    cubetemp[2][8] = @cube[2][6]
+
+    @hist << 'b'
+    @cube = Marshal.load(Marshal.dump(cubetemp))
+    self
+  end
+  def br
+    3.times do 
+      self.b
+      @hist.pop
+    end
+    @hist << "br"
+    self
+  end
+
+  def u
+    cubetemp = Marshal.load(Marshal.dump(@cube))
+
+    cubetemp[1][4] = @cube[4][2]
+    cubetemp[1][5] = @cube[4][3]
+    cubetemp[1][6] = @cube[4][4]
+
+    cubetemp[4][2] = @cube[3][8]
+    cubetemp[4][3] = @cube[3][1]
+    cubetemp[4][4] = @cube[3][2]
+
+    cubetemp[3][8] = @cube[2][6]
+    cubetemp[3][1] = @cube[2][7]
+    cubetemp[3][2] = @cube[2][8]
+
+    cubetemp[2][6] = @cube[1][4]
+    cubetemp[2][7] = @cube[1][5]
+    cubetemp[2][8] = @cube[1][6]
+
+    cubetemp[0][1] = @cube[0][7]
+    cubetemp[0][2] = @cube[0][8]
+    cubetemp[0][3] = @cube[0][1]
+    cubetemp[0][4] = @cube[0][2]
+    cubetemp[0][5] = @cube[0][3]
+    cubetemp[0][6] = @cube[0][4]
+    cubetemp[0][7] = @cube[0][5]
+    cubetemp[0][8] = @cube[0][6]
+
+    @hist << 'u'
+    @cube = Marshal.load(Marshal.dump(cubetemp))
+    self  
+  end
+  def ur
+    3.times do 
+      self.u
+      @hist.pop
+    end
+    @hist << "ur"
+    self
+  end
+
+  def d
+    cubetemp = Marshal.load(Marshal.dump(@cube))
+
+    cubetemp[1][8] = @cube[2][2]
+    cubetemp[1][1] = @cube[2][3]
+    cubetemp[1][2] = @cube[2][4]
+
+    cubetemp[2][2] = @cube[3][4]
+    cubetemp[2][3] = @cube[3][5]
+    cubetemp[2][4] = @cube[3][6]
+
+    cubetemp[3][4] = @cube[4][6]
+    cubetemp[3][5] = @cube[4][7]
+    cubetemp[3][6] = @cube[4][8]
+
+    cubetemp[4][6] = @cube[1][8]
+    cubetemp[4][7] = @cube[1][1]
+    cubetemp[4][8] = @cube[1][2]
+
+    cubetemp[5][1] = @cube[5][7]
+    cubetemp[5][2] = @cube[5][8]
+    cubetemp[5][3] = @cube[5][1]
+    cubetemp[5][4] = @cube[5][2]
+    cubetemp[5][5] = @cube[5][3]
+    cubetemp[5][6] = @cube[5][4]
+    cubetemp[5][7] = @cube[5][5]
+    cubetemp[5][8] = @cube[5][6]
+
+    @hist << 'd'
+    @cube = Marshal.load(Marshal.dump(cubetemp))
+    self
+  end
+  def dr
+    3.times do 
+      self.d
+      @hist.pop
+    end
+    @hist << "dr"
+    self
+  end
+
+ 
+  #cube orientation motions
+  def turn 
+    cubetemp = [[],[],[],[],[],[]]
+
+    cubetemp[0][0] = @cube[0][0]
+    cubetemp[0][1] = @cube[0][7]
+    cubetemp[0][2] = @cube[0][8]
+    cubetemp[0][3] = @cube[0][1]
+    cubetemp[0][4] = @cube[0][2]
+    cubetemp[0][5] = @cube[0][3]
+    cubetemp[0][6] = @cube[0][4]
+    cubetemp[0][7] = @cube[0][5]
+    cubetemp[0][8] = @cube[0][6]
+
+    cubetemp[1][0] = @cube[4][0]
+    cubetemp[1][1] = @cube[4][7]
+    cubetemp[1][2] = @cube[4][8]
+    cubetemp[1][3] = @cube[4][1]
+    cubetemp[1][4] = @cube[4][2]
+    cubetemp[1][5] = @cube[4][3]
+    cubetemp[1][6] = @cube[4][4]
+    cubetemp[1][7] = @cube[4][5]
+    cubetemp[1][8] = @cube[4][6]
+
+    cubetemp[2][0] = @cube[1][0]
+    cubetemp[2][1] = @cube[1][7]
+    cubetemp[2][2] = @cube[1][8]
+    cubetemp[2][3] = @cube[1][1]
+    cubetemp[2][4] = @cube[1][2]
+    cubetemp[2][5] = @cube[1][3]
+    cubetemp[2][6] = @cube[1][4]
+    cubetemp[2][7] = @cube[1][5]
+    cubetemp[2][8] = @cube[1][6]
+
+    cubetemp[3][0] = @cube[2][0]
+    cubetemp[3][1] = @cube[2][7]
+    cubetemp[3][2] = @cube[2][8]
+    cubetemp[3][3] = @cube[2][1]
+    cubetemp[3][4] = @cube[2][2]
+    cubetemp[3][5] = @cube[2][3]
+    cubetemp[3][6] = @cube[2][4]
+    cubetemp[3][7] = @cube[2][5]
+    cubetemp[3][8] = @cube[2][6]
+
+    cubetemp[4][0] = @cube[3][0]
+    cubetemp[4][1] = @cube[3][7]
+    cubetemp[4][2] = @cube[3][8]
+    cubetemp[4][3] = @cube[3][1]
+    cubetemp[4][4] = @cube[3][2]
+    cubetemp[4][5] = @cube[3][3]
+    cubetemp[4][6] = @cube[3][4]
+    cubetemp[4][7] = @cube[3][5]
+    cubetemp[4][8] = @cube[3][6]
+
+    cubetemp[5][0] = @cube[5][0]
+    cubetemp[5][1] = @cube[5][3]
+    cubetemp[5][2] = @cube[5][4]
+    cubetemp[5][3] = @cube[5][5]
+    cubetemp[5][4] = @cube[5][6]
+    cubetemp[5][5] = @cube[5][7]
+    cubetemp[5][6] = @cube[5][8]
+    cubetemp[5][7] = @cube[5][1]
+    cubetemp[5][8] = @cube[5][2]
+
+    @hist << 'turn'
+    @cube = cubetemp
     self
   end
 
@@ -133,6 +429,14 @@ class Cube
     self
   end
 
+  def invert
+    self.turn_over.turn_over
+    @hist << "invert" 
+    self
+  end
+
+
+  #first layer moves
   def cross_solve 
     downcross = []
     i = 1
@@ -143,7 +447,7 @@ class Cube
          self.rr.d.r.l.dr.lr.turn
          downcross = [@cube[5][1],@cube[5][3],@cube[5][5], @cube[5][7]]
          i += 1
-         if i > 100
+         if i > 10
            self.turn until @cube[0][1] != 0
            self.l.b 
            i = 1
@@ -167,7 +471,7 @@ class Cube
       self.turn if @cube[4][3] != @cube[4][0]
       i += 1
 
-      if i > 100   
+      if i > 10   
         self.cross_swap
         i = 1
       end
@@ -185,7 +489,9 @@ class Cube
     corners = []
 
     i = 1
-    until @cube[0].uniq == [0]
+
+    until @cube[0].uniq == [0] && @cube[1][4] == @cube[1][0] && @cube[2][6] == @cube[2][0] && @cube[3][2] == @cube[3][0] && @cube[4][2] == @cube[4][0]
+
       corners = [@cube[1][8],@cube[1][2],@cube[2][4],@cube[2][2],@cube[3][4],@cube[3][6],@cube[4][6],@cube[4][8]]
       until corners.include?(0)
         self.rr.d.r.turn
@@ -219,14 +525,14 @@ class Cube
     self
   end
 
+  #second layer move
   def second_layer_solve
-
     self.invert
     mids = []
 
   #  until @cube[1][3] == @cube[1][0] && @cube[1][7] == @cube[1][0] && @cube[2][1] == @cube[2][0] && @cube[2][5] == @cube[2][0] && @cube[3][3] == @cube[3][0] && @cube[3][7] ==@cube[3][0] && @cube[4][1] == @cube[4][0] && @cube[4][5] == @cube[4][0]
 
-    until mids.include?(5) == false && @cube[1][7] == @cube[1][0] && @cube[3][3] == @cube[3][0] && @cube[3][7] == @cube[3][0] && @cube[1][3] == @cube[1][0]
+    until mids.include?(5) == false && @cube[1][7] == @cube[1][0] && @cube[1][3] == @cube[1][0] && @cube[3][3] == @cube[3][0] && @cube[3][7] == @cube[3][0] && @cube[2][1] == @cube[2][0] && @cube[2][5] == @cube[2][0] && @cube[4][1] == @cube[4][0] && @cube[4][5] == @cube[4][0]
 
       until @cube[4][5] == @cube[4][0] && @cube[3][7] == @cube[3][0]
       i = 0
@@ -238,7 +544,6 @@ class Cube
           if i > 50
             self.cross_swap
             self.u.r.ur.rr.ur.fr.u.f
-            self.print
             i = 1
           end
         end
@@ -255,319 +560,138 @@ class Cube
       self.turn
       mids = [@cube[1][3],@cube[1][7],@cube[2][1],@cube[2][5],@cube[3][3],@cube[3][7],@cube[4][1],@cube[4][5]]
     end
-    p mids
+
+
+    self
+  end
+
+  #last layer moves
+  def top_cross
+    topcross = [@cube[0][1],@cube[0][3],@cube[0][5],@cube[0][7]]
+    i = 1
+    bigi = 0
+    until topcross.count(5) >= 2
+      self.cross_shuffle
+      bigi += 1
+      i += 1
+
+      if i > 15
+        self.turn
+        i = 1
+      end
+
+      if bigi > 100
+        puts "derp"
+        p topcross
+      gets
+      end
+    topcross = [@cube[0][1],@cube[0][3],@cube[0][5],@cube[0][7]]
+    end
+
+    if (topcross[0] == 5 && topcross[2] == 5) || (topcross[1] == 5 && topcross[3] == 5)
+      self.turn until @cube[0][7] == @cube[0][0] 
+      self.cross_swap
+    end
+    
+    self.turn until @cube[0][1] == @cube[0][0] && @cube[0][3] == @cube[0][0]
+
+    i = 1
+    until topcross.uniq == [5]
+      self.cross_shuffle
+
+      if i > 20
+        self.turn
+      end
+      topcross = [@cube[0][1],@cube[0][3],@cube[0][5],@cube[0][7]]
+    end
+    i = 1
+    until @cube[1][5] == @cube[1][0] && @cube[4][3] == @cube[4][0]
+      self.u
+      i += 1
+      if i >17 
+        self.cross_swap.turn.cross_swap
+        i = 1
+      end
+    end
+    self.cross_swap if @cube[3][1] != @cube[3][0]
+    self
+  end
+
+  def top_corners
+    stay_corner = [@cube[0][2], @cube[1][4],@cube[2][8]]
+    i = 1
+
+    until stay_corner.sort == [@cube[1][0],@cube[2][0],@cube[0][0]].sort
+      self.turn
+      stay_corner = [@cube[0][2], @cube[1][4],@cube[2][8]]
+      i += 1
+
+      if i > 4
+        self.top_corner_shuffle
+        i = 0
+        stay_corner = [@cube[0][2], @cube[1][4],@cube[2][8]]
+      end
+    end
+    
+    until @cube[0][2] == @cube[0][0]
+      self.turn.turn.last_move.turn.turn
+    end
+
+    stay4 = [@cube[0][4], @cube[2][6],@cube[3][2]]
+    until stay4.sort == [@cube[2][0],@cube[3][0],@cube[0][0]].sort
+      
+    self.top_corner_shuffle
+      stay4 = [@cube[0][4], @cube[2][6],@cube[3][2]]
+    end
+
+    self.turn.last_move.turn.turn.turn until @cube[0][4] == @cube[0][0]
+
+    if @cube[0][4] == @cube[0][0] && @cube[0][6] != @cube[0][0]
+      i = 1
+
+      until @cube.sort == [[0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1],[2,2,2,2,2,2,2,2,2],[3,3,3,3,3,3,3,3,3],[4,4,4,4,4,4,4,4,4],[5,5,5,5,5,5,5,5,5]]
+
+      self.last_move
+      i += 1
+      if i > 100
+        self.colorize.print
+        gets
+        i = 1
+      end
+      end
+    end
+  end
+
+  def cross_shuffle
+    self.f.u.r.ur.rr.fr
     self
   end
 
   def cross_swap
     self.rr.u.u.r.u.rr.u.r.u
-  end
-
-  def turn 
-    cubetemp = [[],[],[],[],[],[]]
-
-    cubetemp[0][0] = @cube[0][0]
-    cubetemp[0][1] = @cube[0][7]
-    cubetemp[0][2] = @cube[0][8]
-    cubetemp[0][3] = @cube[0][1]
-    cubetemp[0][4] = @cube[0][2]
-    cubetemp[0][5] = @cube[0][3]
-    cubetemp[0][6] = @cube[0][4]
-    cubetemp[0][7] = @cube[0][5]
-    cubetemp[0][8] = @cube[0][6]
-
-    cubetemp[1][0] = @cube[4][0]
-    cubetemp[1][1] = @cube[4][7]
-    cubetemp[1][2] = @cube[4][8]
-    cubetemp[1][3] = @cube[4][1]
-    cubetemp[1][4] = @cube[4][2]
-    cubetemp[1][5] = @cube[4][3]
-    cubetemp[1][6] = @cube[4][4]
-    cubetemp[1][7] = @cube[4][5]
-    cubetemp[1][8] = @cube[4][6]
-
-    cubetemp[2][0] = @cube[1][0]
-    cubetemp[2][1] = @cube[1][7]
-    cubetemp[2][2] = @cube[1][8]
-    cubetemp[2][3] = @cube[1][1]
-    cubetemp[2][4] = @cube[1][2]
-    cubetemp[2][5] = @cube[1][3]
-    cubetemp[2][6] = @cube[1][4]
-    cubetemp[2][7] = @cube[1][5]
-    cubetemp[2][8] = @cube[1][6]
-
-    cubetemp[3][0] = @cube[2][0]
-    cubetemp[3][1] = @cube[2][7]
-    cubetemp[3][2] = @cube[2][8]
-    cubetemp[3][3] = @cube[2][1]
-    cubetemp[3][4] = @cube[2][2]
-    cubetemp[3][5] = @cube[2][3]
-    cubetemp[3][6] = @cube[2][4]
-    cubetemp[3][7] = @cube[2][5]
-    cubetemp[3][8] = @cube[2][6]
-
-    cubetemp[4][0] = @cube[3][0]
-    cubetemp[4][1] = @cube[3][7]
-    cubetemp[4][2] = @cube[3][8]
-    cubetemp[4][3] = @cube[3][1]
-    cubetemp[4][4] = @cube[3][2]
-    cubetemp[4][5] = @cube[3][3]
-    cubetemp[4][6] = @cube[3][4]
-    cubetemp[4][7] = @cube[3][5]
-    cubetemp[4][8] = @cube[3][6]
-
-    cubetemp[5][0] = @cube[5][0]
-    cubetemp[5][1] = @cube[5][3]
-    cubetemp[5][2] = @cube[5][4]
-    cubetemp[5][3] = @cube[5][5]
-    cubetemp[5][4] = @cube[5][6]
-    cubetemp[5][5] = @cube[5][7]
-    cubetemp[5][6] = @cube[5][8]
-    cubetemp[5][7] = @cube[5][1]
-    cubetemp[5][8] = @cube[5][2]
-
-    @cube = cubetemp
     self
   end
 
-  def l
-    cubetemp = Marshal.load(Marshal.dump(@cube))
-
-    cubetemp[0][1] = @cube[2][1]
-    cubetemp[0][2] = @cube[2][2]
-    cubetemp[0][8] = @cube[2][8]
-
-    cubetemp[2][1] = @cube[5][1]
-    cubetemp[2][2] = @cube[5][2]
-    cubetemp[2][8] = @cube[5][8]
-
-    cubetemp[5][1] = @cube[4][1]
-    cubetemp[5][2] = @cube[4][2]
-    cubetemp[5][8] = @cube[4][8]
-
-    cubetemp[4][1] = @cube[0][1]
-    cubetemp[4][2] = @cube[0][2]
-    cubetemp[4][8] = @cube[0][8]
-
-
-
-    cubetemp[1][1] = @cube[1][7]
-    cubetemp[1][2] = @cube[1][8]
-    cubetemp[1][3] = @cube[1][1]
-    cubetemp[1][4] = @cube[1][2]
-    cubetemp[1][5] = @cube[1][3]
-    cubetemp[1][6] = @cube[1][4]
-    cubetemp[1][7] = @cube[1][5]
-    cubetemp[1][8] = @cube[1][6]
-
-    @cube = Marshal.load(Marshal.dump(cubetemp))
+  def top_corner_shuffle
+    self.rr.u.l.ur.r.u.lr.ur
     self
   end
 
-  def lr
-    3.times do 
-      self.l
-    end
+
+  def last_move
+    self.rr.d.d.r.f.d.d.fr.ur.f.d.d.fr.rr.d.d.r.u
     self
   end
 
-  def r
-    cubetemp = Marshal.load(Marshal.dump(@cube))
 
-    cubetemp[0][4] = @cube[4][4]
-    cubetemp[0][5] = @cube[4][5]
-    cubetemp[0][6] = @cube[4][6]
+# cube methods and UI 
 
-    cubetemp[4][4] = @cube[5][4]
-    cubetemp[4][5] = @cube[5][5]
-    cubetemp[4][6] = @cube[5][6]
-
-    cubetemp[5][4] = @cube[2][4]
-    cubetemp[5][5] = @cube[2][5]
-    cubetemp[5][6] = @cube[2][6]
-
-    cubetemp[2][4] = @cube[0][4]
-    cubetemp[2][5] = @cube[0][5]
-    cubetemp[2][6] = @cube[0][6]
-
-    cubetemp[3][1] = @cube[3][7]
-    cubetemp[3][2] = @cube[3][8]
-    cubetemp[3][3] = @cube[3][1]
-    cubetemp[3][4] = @cube[3][2]
-    cubetemp[3][5] = @cube[3][3]
-    cubetemp[3][6] = @cube[3][4]
-    cubetemp[3][7] = @cube[3][5]
-    cubetemp[3][8] = @cube[3][6]
-
-    @cube = Marshal.load(Marshal.dump(cubetemp))
-    self
+  def solve
+    self.cross_solve.corners_solve.second_layer_solve.top_cross.top_corners
+    turn until @cube[1][0] == 1
+    self.invert
   end
-
-  def rr
-    3.times do 
-      self.r
-    end
-    self
-  end
-
-  def f
-    cubetemp = Marshal.load(Marshal.dump(@cube))
-
-    cubetemp[0][6] = @cube[1][6]
-    cubetemp[0][7] = @cube[1][7]
-    cubetemp[0][8] = @cube[1][8]
-
-    cubetemp[1][6] = @cube[5][2]
-    cubetemp[1][7] = @cube[5][3]
-    cubetemp[1][8] = @cube[5][4]
-
-    cubetemp[5][2] = @cube[3][6]
-    cubetemp[5][3] = @cube[3][7]
-    cubetemp[5][4] = @cube[3][8]
-
-    cubetemp[3][8] = @cube[0][8]
-    cubetemp[3][7] = @cube[0][7]
-    cubetemp[3][6] = @cube[0][6]
-
-    cubetemp[4][1] = @cube[4][7]
-    cubetemp[4][2] = @cube[4][8]
-    cubetemp[4][3] = @cube[4][1]
-    cubetemp[4][4] = @cube[4][2]
-    cubetemp[4][5] = @cube[4][3]
-    cubetemp[4][6] = @cube[4][4]
-    cubetemp[4][7] = @cube[4][5]
-    cubetemp[4][8] = @cube[4][6]
-
-    @cube = Marshal.load(Marshal.dump(cubetemp))
-    self
-  end
-
-  def fr
-    3.times do 
-      self.f
-    end
-    self
-  end
-
-  def b
-    cubetemp = Marshal.load(Marshal.dump(@cube))
-
-    cubetemp[0][2] = @cube[3][2]
-    cubetemp[0][3] = @cube[3][3]
-    cubetemp[0][4] = @cube[3][4]
-
-    cubetemp[1][2] = @cube[0][2]
-    cubetemp[1][3] = @cube[0][3]
-    cubetemp[1][4] = @cube[0][4]
-
-    cubetemp[3][2] = @cube[5][6]
-    cubetemp[3][3] = @cube[5][7]
-    cubetemp[3][4] = @cube[5][8]
-
-    cubetemp[5][6] = @cube[1][2]
-    cubetemp[5][7] = @cube[1][3]
-    cubetemp[5][8] = @cube[1][4]
-
-
-
-    cubetemp[2][1] = @cube[2][7]
-    cubetemp[2][2] = @cube[2][8]
-    cubetemp[2][3] = @cube[2][1]
-    cubetemp[2][4] = @cube[2][2]
-    cubetemp[2][5] = @cube[2][3]
-    cubetemp[2][6] = @cube[2][4]
-    cubetemp[2][7] = @cube[2][5]
-    cubetemp[2][8] = @cube[2][6]
-
-    @cube = Marshal.load(Marshal.dump(cubetemp))
-    self
-  end
-
-  def br
-    3.times do 
-      self.b
-    end
-    self
-  end
-
-  def u
-    cubetemp = Marshal.load(Marshal.dump(@cube))
-
-    cubetemp[1][4] = @cube[4][2]
-    cubetemp[1][5] = @cube[4][3]
-    cubetemp[1][6] = @cube[4][4]
-
-    cubetemp[4][2] = @cube[3][8]
-    cubetemp[4][3] = @cube[3][1]
-    cubetemp[4][4] = @cube[3][2]
-
-    cubetemp[3][8] = @cube[2][6]
-    cubetemp[3][1] = @cube[2][7]
-    cubetemp[3][2] = @cube[2][8]
-
-    cubetemp[2][6] = @cube[1][4]
-    cubetemp[2][7] = @cube[1][5]
-    cubetemp[2][8] = @cube[1][6]
-
-    cubetemp[0][1] = @cube[0][7]
-    cubetemp[0][2] = @cube[0][8]
-    cubetemp[0][3] = @cube[0][1]
-    cubetemp[0][4] = @cube[0][2]
-    cubetemp[0][5] = @cube[0][3]
-    cubetemp[0][6] = @cube[0][4]
-    cubetemp[0][7] = @cube[0][5]
-    cubetemp[0][8] = @cube[0][6]
-
-    @cube = Marshal.load(Marshal.dump(cubetemp))
-    self  
-  end
-
-  def ur
-    3.times do 
-      self.u
-    end
-    self
-  end
-
-  def d
-    cubetemp = Marshal.load(Marshal.dump(@cube))
-
-    cubetemp[1][8] = @cube[2][2]
-    cubetemp[1][1] = @cube[2][3]
-    cubetemp[1][2] = @cube[2][4]
-
-    cubetemp[2][2] = @cube[3][4]
-    cubetemp[2][3] = @cube[3][5]
-    cubetemp[2][4] = @cube[3][6]
-
-    cubetemp[3][4] = @cube[4][6]
-    cubetemp[3][5] = @cube[4][7]
-    cubetemp[3][6] = @cube[4][8]
-
-    cubetemp[4][6] = @cube[1][8]
-    cubetemp[4][7] = @cube[1][1]
-    cubetemp[4][8] = @cube[1][2]
-
-    cubetemp[5][1] = @cube[5][7]
-    cubetemp[5][2] = @cube[5][8]
-    cubetemp[5][3] = @cube[5][1]
-    cubetemp[5][4] = @cube[5][2]
-    cubetemp[5][5] = @cube[5][3]
-    cubetemp[5][6] = @cube[5][4]
-    cubetemp[5][7] = @cube[5][5]
-    cubetemp[5][8] = @cube[5][6]
-
-    @cube = Marshal.load(Marshal.dump(cubetemp))
-    self
-  end
-
-  def dr
-    3.times do 
-      self.d
-    end
-    self
-  end
-
+  
   def scramble
     100.times do 
       turn = rand(5)
@@ -578,6 +702,7 @@ class Cube
       self.f if turn == 4
       self.b if turn == 5
     end
+    @hist = []
     self 
   end
 
@@ -588,6 +713,27 @@ class Cube
     p @cube[3]
     p @cube[4]
     p @cube[5]
+  end
+
+  def colorize
+    @cube.each do |this|
+      this.collect! do |num|
+        if num ==1
+          num = num.to_s.orange
+        elsif num == 2
+          num = num.to_s.yellow
+        elsif num ==3
+          num = num.to_s.red
+        elsif num == 4
+          num = num.to_s.green
+        elsif num ==5 
+          num = num.to_s.blue
+        else
+          num = num
+        end
+      end
+    end
+    self
   end
 
   def print
@@ -614,35 +760,68 @@ class Cube
     puts "                    |#{@cube[3][6]}||#{@cube[3][5]}||#{@cube[3][4]}|"
     puts "                    ---------"
   end
+  self
 end
 
 
-loop do
-y =Time.now
-system("clear")
+
+# i
 x = Cube.new
-x.print
+x.solve
+p x.hist.join(', ')
+puts x.hist.length
 
 
-system("clear")
-x.scramble
+
+
+
+
+#loop do
+#x = Cube.new
+#x.scramble
 #x.print
-#gets
-
-system("clear")
-x.cross_solve#.corners_solve.second_layer_solve
+#sleep(1)
+#x.cross_solve
 #x.print
-#gets
-
-system("clear")
-x.corners_solve
+#sleep(1)
+#x.corners_solve
 #x.print
-#gets
-
-system("clear")
-x.second_layer_solve
-
-x.colorize.print
-puts Time.now - y
-gets
-end
+#sleep(1)
+#x.second_layer_solve
+#x.invert.print
+#x.invert
+#sleep(1)
+#x.top_cross
+#x.invert.print
+#x.invert
+#
+#sleep(1)
+#x.top_corners
+#x.invert.print
+#x.invert
+#sleep(1)
+#x.invert.colorize.print
+#sleep(1)
+#end
+##
+#average = []
+#
+#i = 1
+#1000.times do
+#y =Time.now
+#x = Cube.new
+##system("clear")
+#x.scramble
+#x.solve
+##x.colorize
+##x.print
+#length = Time.now - y
+#
+#average << length
+#puts i
+#i+=1
+#puts average.inject(:+) / average.length
+#
+#puts Time.now
+#end
+#puts average
