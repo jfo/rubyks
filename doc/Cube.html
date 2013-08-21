@@ -34,8 +34,8 @@
         <div class="section-body">
           <ul>
           
-            <li><a href="./solver_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
-              class="thickbox" title="solver.rb">solver.rb</a></li>
+            <li><a href="./rubyks_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="rubyks.rb">rubyks.rb</a></li>
           
           </ul>
         </div>
@@ -69,6 +69,8 @@
           
           <li><a href="#method-i-b">#b</a></li>
           
+          <li><a href="#method-i-b2">#b2</a></li>
+          
           <li><a href="#method-i-br">#br</a></li>
           
           <li><a href="#method-i-clean_hist">#clean_hist</a></li>
@@ -85,17 +87,23 @@
           
           <li><a href="#method-i-d">#d</a></li>
           
-          <li><a href="#method-i-decolor">#decolor</a></li>
+          <li><a href="#method-i-d2">#d2</a></li>
+          
+          <li><a href="#method-i-decolorize">#decolorize</a></li>
           
           <li><a href="#method-i-dr">#dr</a></li>
           
           <li><a href="#method-i-f">#f</a></li>
+          
+          <li><a href="#method-i-f2">#f2</a></li>
           
           <li><a href="#method-i-fr">#fr</a></li>
           
           <li><a href="#method-i-invert">#invert</a></li>
           
           <li><a href="#method-i-l">#l</a></li>
+          
+          <li><a href="#method-i-l2">#l2</a></li>
           
           <li><a href="#method-i-last_move">#last_move</a></li>
           
@@ -105,6 +113,8 @@
           
           <li><a href="#method-i-r">#r</a></li>
           
+          <li><a href="#method-i-r2">#r2</a></li>
+          
           <li><a href="#method-i-rr">#rr</a></li>
           
           <li><a href="#method-i-scramble">#scramble</a></li>
@@ -113,7 +123,7 @@
           
           <li><a href="#method-i-show">#show</a></li>
           
-          <li><a href="#method-i-solve">#solve</a></li>
+          <li><a href="#method-i-simple_solve">#simple_solve</a></li>
           
           <li><a href="#method-i-top_corner_shuffle">#top_corner_shuffle</a></li>
           
@@ -126,6 +136,8 @@
           <li><a href="#method-i-turn_over">#turn_over</a></li>
           
           <li><a href="#method-i-u">#u</a></li>
+          
+          <li><a href="#method-i-u2">#u2</a></li>
           
           <li><a href="#method-i-ur">#ur</a></li>
           
@@ -156,8 +168,6 @@
         <ul class="link-list">
         
           <li><a href="./Cube.html">Cube</a></li>
-        
-          <li><a href="./String.html">String</a></li>
         
         </ul>
         <div id="no-class-search-results" style="display: none;">No matching classes.</div>
@@ -246,14 +256,13 @@
 
           <div class="method-description">
             
-            <p>New cubes are instantiaed in a solved state. Call scramble on a solved cube
-to clear hist and</p>
+            <p>New cubes are instantiated in a solved state with a clean history.</p>
             
 
             
             <div class="method-source-code" id="new-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 34</span>
+<span class="ruby-comment"># File rubyks.rb, line 5</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
   <span class="ruby-ivar">@cube</span> = [[<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>],[<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>],[<span class="ruby-value">2</span>,<span class="ruby-value">2</span>,<span class="ruby-value">2</span>,<span class="ruby-value">2</span>,<span class="ruby-value">2</span>,<span class="ruby-value">2</span>,<span class="ruby-value">2</span>,<span class="ruby-value">2</span>,<span class="ruby-value">2</span>],[<span class="ruby-value">3</span>,<span class="ruby-value">3</span>,<span class="ruby-value">3</span>,<span class="ruby-value">3</span>,<span class="ruby-value">3</span>,<span class="ruby-value">3</span>,<span class="ruby-value">3</span>,<span class="ruby-value">3</span>,<span class="ruby-value">3</span>],[<span class="ruby-value">4</span>,<span class="ruby-value">4</span>,<span class="ruby-value">4</span>,<span class="ruby-value">4</span>,<span class="ruby-value">4</span>,<span class="ruby-value">4</span>,<span class="ruby-value">4</span>,<span class="ruby-value">4</span>,<span class="ruby-value">4</span>],[<span class="ruby-value">5</span>,<span class="ruby-value">5</span>,<span class="ruby-value">5</span>,<span class="ruby-value">5</span>,<span class="ruby-value">5</span>,<span class="ruby-value">5</span>,<span class="ruby-value">5</span>,<span class="ruby-value">5</span>,<span class="ruby-value">5</span>]]
   <span class="ruby-ivar">@hist</span> = []
@@ -287,13 +296,13 @@ to clear hist and</p>
 
           <div class="method-description">
             
-            
+            <p>Turns back face clockwise</p>
             
 
             
             <div class="method-source-code" id="b-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 194</span>
+<span class="ruby-comment"># File rubyks.rb, line 198</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">b</span>
   <span class="ruby-identifier">cubetemp</span> = <span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">load</span>(<span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">dump</span>(<span class="ruby-ivar">@cube</span>))
 
@@ -338,6 +347,41 @@ to clear hist and</p>
         </div><!-- b-method -->
 
       
+        <div id="b2-method" class="method-detail ">
+          <a name="method-i-b2"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">b2</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Turns back face twice</p>
+            
+
+            
+            <div class="method-source-code" id="b2-source">
+<pre>
+<span class="ruby-comment"># File rubyks.rb, line 242</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">b2</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">b</span>.<span class="ruby-identifier">b</span>
+  <span class="ruby-ivar">@hist</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'b2'</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- b2-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- b2-method -->
+
+      
         <div id="br-method" class="method-detail ">
           <a name="method-i-br"></a>
 
@@ -351,13 +395,13 @@ to clear hist and</p>
 
           <div class="method-description">
             
-            
+            <p>Turns back face counter-clockwise</p>
             
 
             
             <div class="method-source-code" id="br-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 228</span>
+<span class="ruby-comment"># File rubyks.rb, line 233</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">br</span>
   <span class="ruby-value">3</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> 
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">b</span>
@@ -389,17 +433,16 @@ to clear hist and</p>
 
           <div class="method-description">
             
-            <p>simply removes any 4 of the same move in a row in @hist. Any move repeated
-four times ends the cube in the state it started in.</p>
+            <p>Removes any 4 of the same move in a row in @hist. Any move repeated four
+times ends the cube in the state it started in.</p>
             
 
             
             <div class="method-source-code" id="clean_hist-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 40</span>
+<span class="ruby-comment"># File rubyks.rb, line 11</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">clean_hist</span>
   <span class="ruby-identifier">i</span> = <span class="ruby-value">0</span>
-  <span class="ruby-identifier">p</span> <span class="ruby-ivar">@hist</span>.<span class="ruby-identifier">length</span>
   <span class="ruby-keyword">until</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@hist</span>.<span class="ruby-identifier">length</span>
     <span class="ruby-keyword">if</span> <span class="ruby-ivar">@hist</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">==</span> <span class="ruby-ivar">@hist</span>[<span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@hist</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">==</span> <span class="ruby-ivar">@hist</span>[<span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">2</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@hist</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">==</span> <span class="ruby-ivar">@hist</span>[<span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">3</span>] 
       <span class="ruby-value">4</span>.<span class="ruby-identifier">times</span> {<span class="ruby-ivar">@hist</span>.<span class="ruby-identifier">delete_at</span>(<span class="ruby-identifier">i</span>)}
@@ -407,6 +450,17 @@ four times ends the cube in the state it started in.</p>
     <span class="ruby-keyword">end</span>
    <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
   <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">i</span> = <span class="ruby-value">0</span>
+  <span class="ruby-keyword">until</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@hist</span>.<span class="ruby-identifier">length</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@hist</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">==</span> <span class="ruby-ivar">@hist</span>[<span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@hist</span>[<span class="ruby-identifier">i</span>].<span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">3</span>
+      <span class="ruby-ivar">@hist</span>.<span class="ruby-identifier">delete_at</span>(<span class="ruby-identifier">i</span>)
+      <span class="ruby-ivar">@hist</span>[<span class="ruby-identifier">i</span>] = <span class="ruby-node">&quot;#{@hist[i]}2&quot;</span>
+      <span class="ruby-identifier">i</span> = <span class="ruby-value">-1</span>
+    <span class="ruby-keyword">end</span>
+   <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+  <span class="ruby-keyword">end</span>
+
   <span class="ruby-ivar">@hist</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">', '</span>)
 <span class="ruby-keyword">end</span></pre>
             </div><!-- clean_hist-source -->
@@ -432,27 +486,26 @@ four times ends the cube in the state it started in.</p>
 
           <div class="method-description">
             
-            <p>colorizes numerals for output to terminal. NOTE: solver methods will not
-work on a colorized cube. (yet)</p>
+            <p>Colorizes integers for output to terminal.</p>
             
 
             
             <div class="method-source-code" id="colorize-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 740</span>
+<span class="ruby-comment"># File rubyks.rb, line 773</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">colorize</span>
   <span class="ruby-ivar">@cube</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">this</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">this</span>.<span class="ruby-identifier">collect!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">num</span><span class="ruby-operator">|</span>
       <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
-        <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">orange</span>
+        <span class="ruby-identifier">num</span> = <span class="ruby-node">&quot;\e[36m#{num}\e[0m&quot;</span>
       <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span>
-        <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">yellow</span>
+        <span class="ruby-identifier">num</span> = <span class="ruby-node">&quot;\e[33m#{num}\e[0m&quot;</span>
       <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span><span class="ruby-value">3</span>
-        <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">red</span>
+        <span class="ruby-identifier">num</span> = <span class="ruby-node">&quot;\e[31m#{num}\e[0m&quot;</span>
       <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">4</span>
-        <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">green</span>
+        <span class="ruby-identifier">num</span> = <span class="ruby-node">&quot;\e[32m#{num}\e[0m&quot;</span>
       <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span><span class="ruby-value">5</span> 
-        <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">blue</span>
+        <span class="ruby-identifier">num</span> = <span class="ruby-node">&quot;\e[34m#{num}\e[0m&quot;</span>
       <span class="ruby-keyword">else</span>
         <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num</span>
       <span class="ruby-keyword">end</span>
@@ -483,13 +536,13 @@ work on a colorized cube. (yet)</p>
 
           <div class="method-description">
             
-            
+            <p>Solves for corners on first layer without affecting first layer cross.</p>
             
 
             
             <div class="method-source-code" id="corners_solve-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 544</span>
+<span class="ruby-comment"># File rubyks.rb, line 572</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">corners_solve</span>
   <span class="ruby-identifier">corners</span> = []
 
@@ -552,13 +605,14 @@ work on a colorized cube. (yet)</p>
 
           <div class="method-description">
             
-            <p>move combinations</p>
+            <p>Shuffles cross cubies on top, doesn’t affect lower layers but does shuffle
+top corners.</p>
             
 
             
             <div class="method-source-code" id="cross_shuffle-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 465</span>
+<span class="ruby-comment"># File rubyks.rb, line 491</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">cross_shuffle</span>
    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">f</span>.<span class="ruby-identifier">u</span>.<span class="ruby-identifier">r</span>.<span class="ruby-identifier">ur</span>.<span class="ruby-identifier">rr</span>.<span class="ruby-identifier">fr</span>
   <span class="ruby-keyword">self</span>
@@ -586,13 +640,13 @@ work on a colorized cube. (yet)</p>
 
           <div class="method-description">
             
-            <p>first layer</p>
+            <p>Solves for cross on first layer. Affects all other layers.</p>
             
 
             
             <div class="method-source-code" id="cross_solve-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 488</span>
+<span class="ruby-comment"># File rubyks.rb, line 515</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">cross_solve</span> 
   <span class="ruby-identifier">downcross</span> = []
   <span class="ruby-identifier">i</span> = <span class="ruby-value">1</span>
@@ -611,14 +665,14 @@ work on a colorized cube. (yet)</p>
     <span class="ruby-keyword">end</span>
 
     <span class="ruby-keyword">until</span> <span class="ruby-ivar">@cube</span>[<span class="ruby-value">5</span>][<span class="ruby-value">3</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">cube</span>[<span class="ruby-value">0</span>][<span class="ruby-value">0</span>]
-      <span class="ruby-comment">#i =0</span>
+      <span class="ruby-identifier">i</span> =<span class="ruby-value">0</span>
       <span class="ruby-keyword">self</span>.<span class="ruby-identifier">d</span>
 
-      <span class="ruby-comment">#if i &gt; 59 </span>
-        <span class="ruby-comment">#self.print</span>
-        <span class="ruby-comment">#gets</span>
-        <span class="ruby-comment">#end</span>
-        <span class="ruby-comment">#i+=1</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">59</span> 
+        <span class="ruby-keyword">self</span>.<span class="ruby-identifier">print</span>
+        <span class="ruby-identifier">gets</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">i</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>
     <span class="ruby-keyword">end</span>
 
     <span class="ruby-keyword">until</span> <span class="ruby-ivar">@cube</span>[<span class="ruby-value">0</span>][<span class="ruby-value">7</span>] <span class="ruby-operator">!=</span> <span class="ruby-ivar">@cube</span>[<span class="ruby-value">0</span>][<span class="ruby-value">0</span>]
@@ -671,13 +725,14 @@ work on a colorized cube. (yet)</p>
 
           <div class="method-description">
             
-            
+            <p>Swaps [<a href="http://5">0]</a> and [<a href="http://3">0]</a>. Doesn’t
+affect lower layers but does affect top corners.</p>
             
 
             
             <div class="method-source-code" id="cross_swap-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 470</span>
+<span class="ruby-comment"># File rubyks.rb, line 497</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">cross_swap</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">rr</span>.<span class="ruby-identifier">u</span>.<span class="ruby-identifier">u</span>.<span class="ruby-identifier">r</span>.<span class="ruby-identifier">u</span>.<span class="ruby-identifier">rr</span>.<span class="ruby-identifier">u</span>.<span class="ruby-identifier">r</span>.<span class="ruby-identifier">u</span>
   <span class="ruby-keyword">self</span>
@@ -705,13 +760,13 @@ work on a colorized cube. (yet)</p>
 
           <div class="method-description">
             
-            
+            <p>Turns bottom face clockwise</p>
             
 
             
             <div class="method-source-code" id="d-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 278</span>
+<span class="ruby-comment"># File rubyks.rb, line 298</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">d</span>
   <span class="ruby-identifier">cubetemp</span> = <span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">load</span>(<span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">dump</span>(<span class="ruby-ivar">@cube</span>))
 
@@ -754,12 +809,12 @@ work on a colorized cube. (yet)</p>
         </div><!-- d-method -->
 
       
-        <div id="decolor-method" class="method-detail ">
-          <a name="method-i-decolor"></a>
+        <div id="d2-method" class="method-detail ">
+          <a name="method-i-d2"></a>
 
           
           <div class="method-heading">
-            <span class="method-name">decolor</span><span
+            <span class="method-name">d2</span><span
               class="method-args">()</span>
             <span class="method-click-advice">click to toggle source</span>
           </div>
@@ -767,29 +822,69 @@ work on a colorized cube. (yet)</p>
 
           <div class="method-description">
             
-            <p>doesn’t work yet</p>
+            <p>Turns bottom face twice</p>
             
 
             
-            <div class="method-source-code" id="decolor-source">
+            <div class="method-source-code" id="d2-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 762</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">decolor</span>
-  <span class="ruby-ivar">@cube</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">this</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">this</span>.<span class="ruby-identifier">collect!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">num</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp">/[0-9]/</span>).<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">to_i</span>
-      <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;wooo&quot;</span>
-    <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">end</span>
+<span class="ruby-comment"># File rubyks.rb, line 340</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">d2</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">d</span>.<span class="ruby-identifier">d</span>
+  <span class="ruby-ivar">@hist</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'l2'</span>
+  <span class="ruby-keyword">self</span>
 <span class="ruby-keyword">end</span></pre>
-            </div><!-- decolor-source -->
+            </div><!-- d2-source -->
             
           </div>
 
           
 
           
-        </div><!-- decolor-method -->
+        </div><!-- d2-method -->
+
+      
+        <div id="decolorize-method" class="method-detail ">
+          <a name="method-i-decolorize"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">decolorize</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Converts colorized cube back to integers</p>
+            
+
+            
+            <div class="method-source-code" id="decolorize-source">
+<pre>
+<span class="ruby-comment"># File rubyks.rb, line 795</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">decolorize</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@cube</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value">5</span>) <span class="ruby-operator">==</span> <span class="ruby-keyword">false</span>
+    <span class="ruby-ivar">@cube</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">this</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">this</span>.<span class="ruby-identifier">collect!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">num</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+          <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num</span>
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-identifier">num</span> = <span class="ruby-identifier">num</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/[^\d]/</span>, <span class="ruby-string">''</span>)[<span class="ruby-value">2</span>].<span class="ruby-identifier">to_i</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">num</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">String</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- decolorize-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- decolorize-method -->
 
       
         <div id="dr-method" class="method-detail ">
@@ -805,13 +900,13 @@ work on a colorized cube. (yet)</p>
 
           <div class="method-description">
             
-            
+            <p>Turns bottom face counter-clockwise</p>
             
 
             
             <div class="method-source-code" id="dr-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 310</span>
+<span class="ruby-comment"># File rubyks.rb, line 331</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dr</span>
   <span class="ruby-value">3</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> 
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">d</span>
@@ -843,13 +938,13 @@ work on a colorized cube. (yet)</p>
 
           <div class="method-description">
             
-            
+            <p>Turns front face clockwise</p>
             
 
             
             <div class="method-source-code" id="f-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 153</span>
+<span class="ruby-comment"># File rubyks.rb, line 149</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">f</span>
   <span class="ruby-identifier">cubetemp</span> = <span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">load</span>(<span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">dump</span>(<span class="ruby-ivar">@cube</span>))
 
@@ -892,6 +987,41 @@ work on a colorized cube. (yet)</p>
         </div><!-- f-method -->
 
       
+        <div id="f2-method" class="method-detail ">
+          <a name="method-i-f2"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">f2</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Turns front face twice</p>
+            
+
+            
+            <div class="method-source-code" id="f2-source">
+<pre>
+<span class="ruby-comment"># File rubyks.rb, line 191</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">f2</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">f</span>.<span class="ruby-identifier">f</span>
+  <span class="ruby-ivar">@hist</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'f2'</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- f2-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- f2-method -->
+
+      
         <div id="fr-method" class="method-detail ">
           <a name="method-i-fr"></a>
 
@@ -905,13 +1035,13 @@ work on a colorized cube. (yet)</p>
 
           <div class="method-description">
             
-            
+            <p>Turns front face counter-clockwise</p>
             
 
             
             <div class="method-source-code" id="fr-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 185</span>
+<span class="ruby-comment"># File rubyks.rb, line 182</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">fr</span>
   <span class="ruby-value">3</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> 
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">f</span>
@@ -943,13 +1073,14 @@ work on a colorized cube. (yet)</p>
 
           <div class="method-description">
             
-            
+            <p>Turns cube over TWICE, swapping top and bottom faces. Like “f2” but rest of
+cube moves too.</p>
             
 
             
             <div class="method-source-code" id="invert-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 457</span>
+<span class="ruby-comment"># File rubyks.rb, line 484</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">invert</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">turn_over</span>.<span class="ruby-identifier">turn_over</span>
   <span class="ruby-ivar">@hist</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;invert&quot;</span> 
@@ -978,13 +1109,13 @@ work on a colorized cube. (yet)</p>
 
           <div class="method-description">
             
-            <p>—–BASIC motions, including turn and flip over (invert)</p>
+            <p>Turns left face clockwise</p>
             
 
             
             <div class="method-source-code" id="l-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 70</span>
+<span class="ruby-comment"># File rubyks.rb, line 50</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">l</span>
   <span class="ruby-identifier">cubetemp</span> = <span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">load</span>(<span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">dump</span>(<span class="ruby-ivar">@cube</span>))
 
@@ -1028,6 +1159,41 @@ work on a colorized cube. (yet)</p>
         </div><!-- l-method -->
 
       
+        <div id="l2-method" class="method-detail ">
+          <a name="method-i-l2"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">l2</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Turns left face twice</p>
+            
+
+            
+            <div class="method-source-code" id="l2-source">
+<pre>
+<span class="ruby-comment"># File rubyks.rb, line 93</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">l2</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">l</span>.<span class="ruby-identifier">l</span>
+  <span class="ruby-ivar">@hist</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'l2'</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- l2-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- l2-method -->
+
+      
         <div id="last_move-method" class="method-detail ">
           <a name="method-i-last_move"></a>
 
@@ -1041,13 +1207,15 @@ work on a colorized cube. (yet)</p>
 
           <div class="method-description">
             
-            
+            <p>Re-orients cubies of [<a href="http://4">0]</a>, [<a
+href="http://6">0]</a>, and [<a href="http://8">0]</a> without affecting
+anything else.</p>
             
 
             
             <div class="method-source-code" id="last_move-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 480</span>
+<span class="ruby-comment"># File rubyks.rb, line 509</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">last_move</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">rr</span>.<span class="ruby-identifier">d</span>.<span class="ruby-identifier">d</span>.<span class="ruby-identifier">r</span>.<span class="ruby-identifier">f</span>.<span class="ruby-identifier">d</span>.<span class="ruby-identifier">d</span>.<span class="ruby-identifier">fr</span>.<span class="ruby-identifier">ur</span>.<span class="ruby-identifier">f</span>.<span class="ruby-identifier">d</span>.<span class="ruby-identifier">d</span>.<span class="ruby-identifier">fr</span>.<span class="ruby-identifier">rr</span>.<span class="ruby-identifier">d</span>.<span class="ruby-identifier">d</span>.<span class="ruby-identifier">r</span>.<span class="ruby-identifier">u</span>
   <span class="ruby-keyword">self</span>
@@ -1075,13 +1243,13 @@ work on a colorized cube. (yet)</p>
 
           <div class="method-description">
             
-            
+            <p>Turns left face counter-clockwise</p>
             
 
             
             <div class="method-source-code" id="lr-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 103</span>
+<span class="ruby-comment"># File rubyks.rb, line 84</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">lr</span>
   <span class="ruby-value">3</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> 
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">l</span>
@@ -1113,13 +1281,13 @@ work on a colorized cube. (yet)</p>
 
           <div class="method-description">
             
-            <p>outputs an ascii representation of the cube</p>
+            <p>Outputs an ascii representation of the cube arrays</p>
             
 
             
             <div class="method-source-code" id="print-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 772</span>
+<span class="ruby-comment"># File rubyks.rb, line 810</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">print</span>
   <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;                    ---------&quot;</span>
   <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;                    |#{@cube[1][8]}||#{@cube[1][1]}||#{@cube[1][2]}|&quot;</span>
@@ -1166,13 +1334,13 @@ work on a colorized cube. (yet)</p>
 
           <div class="method-description">
             
-            
+            <p>Turns right face clockwise</p>
             
 
             
             <div class="method-source-code" id="r-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 112</span>
+<span class="ruby-comment"># File rubyks.rb, line 100</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">r</span>
   <span class="ruby-identifier">cubetemp</span> = <span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">load</span>(<span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">dump</span>(<span class="ruby-ivar">@cube</span>))
 
@@ -1215,6 +1383,41 @@ work on a colorized cube. (yet)</p>
         </div><!-- r-method -->
 
       
+        <div id="r2-method" class="method-detail ">
+          <a name="method-i-r2"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">r2</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Turns right face twice</p>
+            
+
+            
+            <div class="method-source-code" id="r2-source">
+<pre>
+<span class="ruby-comment"># File rubyks.rb, line 142</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">r2</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">r</span>.<span class="ruby-identifier">r</span>
+  <span class="ruby-ivar">@hist</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'r2'</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- r2-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- r2-method -->
+
+      
         <div id="rr-method" class="method-detail ">
           <a name="method-i-rr"></a>
 
@@ -1228,13 +1431,13 @@ work on a colorized cube. (yet)</p>
 
           <div class="method-description">
             
-            
+            <p>Turns right face counter-clockwise</p>
             
 
             
             <div class="method-source-code" id="rr-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 144</span>
+<span class="ruby-comment"># File rubyks.rb, line 133</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">rr</span>
   <span class="ruby-value">3</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> 
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">r</span>
@@ -1266,13 +1469,13 @@ work on a colorized cube. (yet)</p>
 
           <div class="method-description">
             
-            <p>scrambles cube with 100 random moves and clears history</p>
+            <p>Scrambles cube with 100 random moves and clears history</p>
             
 
             
             <div class="method-source-code" id="scramble-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 54</span>
+<span class="ruby-comment"># File rubyks.rb, line 35</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">scramble</span>
   <span class="ruby-value">100</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> 
     <span class="ruby-identifier">turn</span> = <span class="ruby-identifier">rand</span>(<span class="ruby-value">5</span>)
@@ -1309,13 +1512,14 @@ work on a colorized cube. (yet)</p>
 
           <div class="method-description">
             
-            <p>second layer</p>
+            <p>Solves for middle layer when first layer is solved without affecting first
+layer.</p>
             
 
             
             <div class="method-source-code" id="second_layer_solve-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 585</span>
+<span class="ruby-comment"># File rubyks.rb, line 613</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">second_layer_solve</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">invert</span>
   <span class="ruby-identifier">mids</span> = []
@@ -1381,7 +1585,7 @@ work on a colorized cube. (yet)</p>
             
             <div class="method-source-code" id="show-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 730</span>
+<span class="ruby-comment"># File rubyks.rb, line 763</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">show</span>
   <span class="ruby-identifier">p</span> <span class="ruby-ivar">@cube</span>[<span class="ruby-value">0</span>]
   <span class="ruby-identifier">p</span> <span class="ruby-ivar">@cube</span>[<span class="ruby-value">1</span>]
@@ -1400,12 +1604,12 @@ work on a colorized cube. (yet)</p>
         </div><!-- show-method -->
 
       
-        <div id="solve-method" class="method-detail ">
-          <a name="method-i-solve"></a>
+        <div id="simple_solve-method" class="method-detail ">
+          <a name="method-i-simple_solve"></a>
 
           
           <div class="method-heading">
-            <span class="method-name">solve</span><span
+            <span class="method-name">simple_solve</span><span
               class="method-args">()</span>
             <span class="method-click-advice">click to toggle source</span>
           </div>
@@ -1418,25 +1622,27 @@ state</p>
             
 
             
-            <div class="method-source-code" id="solve-source">
+            <div class="method-source-code" id="simple_solve-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 718</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">solve</span>
-  <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@cube</span>.<span class="ruby-identifier">sort</span> <span class="ruby-operator">==</span> [[<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>],[<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>],[<span class="ruby-value">2</span>,<span class="ruby-value">2</span>,<span class="ruby-value">2</span>,<span class="ruby-value">2</span>,<span class="ruby-value">2</span>,<span class="ruby-value">2</span>,<span class="ruby-value">2</span>,<span class="ruby-value">2</span>,<span class="ruby-value">2</span>],[<span class="ruby-value">3</span>,<span class="ruby-value">3</span>,<span class="ruby-value">3</span>,<span class="ruby-value">3</span>,<span class="ruby-value">3</span>,<span class="ruby-value">3</span>,<span class="ruby-value">3</span>,<span class="ruby-value">3</span>,<span class="ruby-value">3</span>],[<span class="ruby-value">4</span>,<span class="ruby-value">4</span>,<span class="ruby-value">4</span>,<span class="ruby-value">4</span>,<span class="ruby-value">4</span>,<span class="ruby-value">4</span>,<span class="ruby-value">4</span>,<span class="ruby-value">4</span>,<span class="ruby-value">4</span>],[<span class="ruby-value">5</span>,<span class="ruby-value">5</span>,<span class="ruby-value">5</span>,<span class="ruby-value">5</span>,<span class="ruby-value">5</span>,<span class="ruby-value">5</span>,<span class="ruby-value">5</span>,<span class="ruby-value">5</span>,<span class="ruby-value">5</span>]]
+<span class="ruby-comment"># File rubyks.rb, line 751</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">simple_solve</span>
+  <span class="ruby-identifier">testarray</span> = [] 
+  <span class="ruby-ivar">@cube</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">side</span><span class="ruby-operator">|</span> <span class="ruby-identifier">testarray</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">side</span>.<span class="ruby-identifier">uniq</span>}
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">testarray</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">6</span>
 
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">cross_solve</span>.<span class="ruby-identifier">corners_solve</span>.<span class="ruby-identifier">second_layer_solve</span>.<span class="ruby-identifier">top_cross</span>.<span class="ruby-identifier">top_corners</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">clean_hist</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">invert</span>
   <span class="ruby-keyword">self</span>
 <span class="ruby-keyword">end</span></pre>
-            </div><!-- solve-source -->
+            </div><!-- simple_solve-source -->
             
           </div>
 
           
 
           
-        </div><!-- solve-method -->
+        </div><!-- simple_solve-method -->
 
       
         <div id="top_corner_shuffle-method" class="method-detail ">
@@ -1452,13 +1658,13 @@ state</p>
 
           <div class="method-description">
             
-            
+            <p>Shuffles top corners without affecting lower layers or top cross.</p>
             
 
             
             <div class="method-source-code" id="top_corner_shuffle-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 475</span>
+<span class="ruby-comment"># File rubyks.rb, line 503</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">top_corner_shuffle</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">rr</span>.<span class="ruby-identifier">u</span>.<span class="ruby-identifier">l</span>.<span class="ruby-identifier">ur</span>.<span class="ruby-identifier">r</span>.<span class="ruby-identifier">u</span>.<span class="ruby-identifier">lr</span>.<span class="ruby-identifier">ur</span>
   <span class="ruby-keyword">self</span>
@@ -1486,13 +1692,14 @@ state</p>
 
           <div class="method-description">
             
-            
+            <p>Solves last layer corners when all other layers and cross have been
+completed.</p>
             
 
             
             <div class="method-source-code" id="top_corners-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 674</span>
+<span class="ruby-comment"># File rubyks.rb, line 703</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">top_corners</span>
    <span class="ruby-identifier">stay_corner</span> = [<span class="ruby-ivar">@cube</span>[<span class="ruby-value">0</span>][<span class="ruby-value">2</span>], <span class="ruby-ivar">@cube</span>[<span class="ruby-value">1</span>][<span class="ruby-value">4</span>],<span class="ruby-ivar">@cube</span>[<span class="ruby-value">2</span>][<span class="ruby-value">8</span>]]
   <span class="ruby-identifier">i</span> = <span class="ruby-value">1</span>
@@ -1525,13 +1732,17 @@ state</p>
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@cube</span>[<span class="ruby-value">0</span>][<span class="ruby-value">4</span>] <span class="ruby-operator">==</span> <span class="ruby-ivar">@cube</span>[<span class="ruby-value">0</span>][<span class="ruby-value">0</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@cube</span>[<span class="ruby-value">0</span>][<span class="ruby-value">6</span>] <span class="ruby-operator">!=</span> <span class="ruby-ivar">@cube</span>[<span class="ruby-value">0</span>][<span class="ruby-value">0</span>]
     <span class="ruby-identifier">i</span> = <span class="ruby-value">1</span>
 
-    <span class="ruby-keyword">until</span> <span class="ruby-ivar">@cube</span>.<span class="ruby-identifier">sort</span> <span class="ruby-operator">==</span> [[<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>],[<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>],[<span class="ruby-value">2</span>,<span class="ruby-value">2</span>,<span class="ruby-value">2</span>,<span class="ruby-value">2</span>,<span class="ruby-value">2</span>,<span class="ruby-value">2</span>,<span class="ruby-value">2</span>,<span class="ruby-value">2</span>,<span class="ruby-value">2</span>],[<span class="ruby-value">3</span>,<span class="ruby-value">3</span>,<span class="ruby-value">3</span>,<span class="ruby-value">3</span>,<span class="ruby-value">3</span>,<span class="ruby-value">3</span>,<span class="ruby-value">3</span>,<span class="ruby-value">3</span>,<span class="ruby-value">3</span>],[<span class="ruby-value">4</span>,<span class="ruby-value">4</span>,<span class="ruby-value">4</span>,<span class="ruby-value">4</span>,<span class="ruby-value">4</span>,<span class="ruby-value">4</span>,<span class="ruby-value">4</span>,<span class="ruby-value">4</span>,<span class="ruby-value">4</span>],[<span class="ruby-value">5</span>,<span class="ruby-value">5</span>,<span class="ruby-value">5</span>,<span class="ruby-value">5</span>,<span class="ruby-value">5</span>,<span class="ruby-value">5</span>,<span class="ruby-value">5</span>,<span class="ruby-value">5</span>,<span class="ruby-value">5</span>]]
 
-    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">last_move</span>
-    <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">100</span>
-      <span class="ruby-identifier">i</span> = <span class="ruby-value">1</span>
-    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">testarray</span> = [] 
+    <span class="ruby-keyword">until</span> <span class="ruby-identifier">testarray</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">uniq</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">6</span>
+
+      <span class="ruby-ivar">@cube</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">side</span><span class="ruby-operator">|</span> <span class="ruby-identifier">testarray</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">side</span>.<span class="ruby-identifier">uniq</span>}
+
+      <span class="ruby-keyword">self</span>.<span class="ruby-identifier">last_move</span>
+      <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">100</span>
+        <span class="ruby-identifier">i</span> = <span class="ruby-value">1</span>
+      <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1558,13 +1769,13 @@ state</p>
 
           <div class="method-description">
             
-            <p>last layer moves</p>
+            <p>Solves for last layer cross when first two layers are completed</p>
             
 
             
             <div class="method-source-code" id="top_cross-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 623</span>
+<span class="ruby-comment"># File rubyks.rb, line 651</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">top_cross</span>
    <span class="ruby-identifier">topcross</span> = [<span class="ruby-ivar">@cube</span>[<span class="ruby-value">0</span>][<span class="ruby-value">1</span>],<span class="ruby-ivar">@cube</span>[<span class="ruby-value">0</span>][<span class="ruby-value">3</span>],<span class="ruby-ivar">@cube</span>[<span class="ruby-value">0</span>][<span class="ruby-value">5</span>],<span class="ruby-ivar">@cube</span>[<span class="ruby-value">0</span>][<span class="ruby-value">7</span>]]
   <span class="ruby-identifier">i</span> = <span class="ruby-value">1</span>
@@ -1638,13 +1849,13 @@ state</p>
 
           <div class="method-description">
             
-            <p>cube orientation motions</p>
+            <p>Turns cube clockwise ONCE, like “u” but rest of cube moves too.</p>
             
 
             
             <div class="method-source-code" id="turn-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 322</span>
+<span class="ruby-comment"># File rubyks.rb, line 347</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">turn</span> 
   <span class="ruby-identifier">cubetemp</span> = [[],[],[],[],[],[]]
 
@@ -1735,13 +1946,13 @@ state</p>
 
           <div class="method-description">
             
-            
+            <p>Turns cube over ONCE, like “fr” but rest of cube moves too.</p>
             
 
             
             <div class="method-source-code" id="turn_over-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 390</span>
+<span class="ruby-comment"># File rubyks.rb, line 416</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">turn_over</span> 
   <span class="ruby-identifier">cubetemp</span> = [[],[],[],[],[],[]]
 
@@ -1831,13 +2042,13 @@ state</p>
 
           <div class="method-description">
             
-            
+            <p>Turns top face clockwise</p>
             
 
             
             <div class="method-source-code" id="u-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 237</span>
+<span class="ruby-comment"># File rubyks.rb, line 249</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">u</span>
   <span class="ruby-identifier">cubetemp</span> = <span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">load</span>(<span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">dump</span>(<span class="ruby-ivar">@cube</span>))
 
@@ -1880,6 +2091,41 @@ state</p>
         </div><!-- u-method -->
 
       
+        <div id="u2-method" class="method-detail ">
+          <a name="method-i-u2"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">u2</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>turns top face twice</p>
+            
+
+            
+            <div class="method-source-code" id="u2-source">
+<pre>
+<span class="ruby-comment"># File rubyks.rb, line 291</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">u2</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">u</span>.<span class="ruby-identifier">u</span>
+  <span class="ruby-ivar">@hist</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'u2'</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- u2-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- u2-method -->
+
+      
         <div id="ur-method" class="method-detail ">
           <a name="method-i-ur"></a>
 
@@ -1893,13 +2139,13 @@ state</p>
 
           <div class="method-description">
             
-            
+            <p>turns top face counter-clockwise</p>
             
 
             
             <div class="method-source-code" id="ur-source">
 <pre>
-<span class="ruby-comment"># File solver.rb, line 269</span>
+<span class="ruby-comment"># File rubyks.rb, line 282</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">ur</span>
   <span class="ruby-value">3</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> 
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">u</span>

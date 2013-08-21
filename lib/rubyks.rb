@@ -1,45 +1,15 @@
-class String
-  #colorization
-  def colorize(color_code)
-    "\e[#{color_code}m#{self}\e[0m"
-    end
-
-  def red
-    colorize(31)
-  end
-
-  def green
-    colorize(32)
-  end
-
-  def yellow
-    colorize(33)
-  end
-
-  def blue 
-    colorize(34)
-  end
-
-  def orange 
-    colorize(36)
-  end
-end
-
 class Cube
   attr_accessor :cube, :hist
 
-#initialized stuff should include state of cube, auto scramble maybe? how many moves have been performed and in what order. 
-
-  # New cubes are instantiaed in a solved state. Call scramble on a solved cube to clear hist and 
+  #New cubes are instantiated in a solved state with a clean history.
   def initialize
     @cube = [[0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1],[2,2,2,2,2,2,2,2,2],[3,3,3,3,3,3,3,3,3],[4,4,4,4,4,4,4,4,4],[5,5,5,5,5,5,5,5,5]]
     @hist = []
   end
 
-  #simply removes any 4 of the same move in a row in @hist. Any move repeated four times ends the cube in the state it started in.
+  #Removes any 4 of the same move in a row in @hist. Any move repeated four times ends the cube in the state it started in.
   def clean_hist
     i = 0
-    p @hist.length
     until i == @hist.length
       if @hist[i] == @hist[i+1] && @hist[i] == @hist[i+2] && @hist[i] == @hist[i+3] 
         4.times {@hist.delete_at(i)}
@@ -47,10 +17,21 @@ class Cube
       end
      i += 1
     end
+
+    i = 0
+    until i == @hist.length
+      if @hist[i] == @hist[i+1] && @hist[i].length < 3
+        @hist.delete_at(i)
+        @hist[i] = "#{@hist[i]}2"
+        i = -1
+      end
+     i += 1
+    end
+
     @hist.join(', ')
   end 
 
-  # scrambles cube with 100 random moves and clears history
+  #Scrambles cube with 100 random moves and clears history
   def scramble
     100.times do 
       turn = rand(5)
@@ -65,8 +46,7 @@ class Cube
     self 
   end
 
-  ##-----BASIC motions, including turn and flip over (invert)
-
+  #Turns left face clockwise
   def l
     cubetemp = Marshal.load(Marshal.dump(@cube))
 
@@ -100,6 +80,7 @@ class Cube
     @hist << 'l'
     self
   end
+  #Turns left face counter-clockwise
   def lr
     3.times do 
       self.l
@@ -108,7 +89,14 @@ class Cube
     @hist << 'lr'
     self
   end
+  #Turns left face twice
+  def l2
+    self.l.l
+    @hist << 'l2'
+    self
+  end
 
+  #Turns right face clockwise
   def r
     cubetemp = Marshal.load(Marshal.dump(@cube))
 
@@ -141,6 +129,7 @@ class Cube
     @cube = Marshal.load(Marshal.dump(cubetemp))
     self
   end
+  #Turns right face counter-clockwise
   def rr
     3.times do 
       self.r
@@ -149,7 +138,14 @@ class Cube
     @hist << "rr"
     self
   end
+  #Turns right face twice
+  def r2
+    self.r.r
+    @hist << 'r2'
+    self
+  end
 
+  #Turns front face clockwise
   def f
     cubetemp = Marshal.load(Marshal.dump(@cube))
 
@@ -182,6 +178,7 @@ class Cube
     @cube = Marshal.load(Marshal.dump(cubetemp))
     self
   end
+  #Turns front face counter-clockwise
   def fr
     3.times do 
       self.f
@@ -190,7 +187,14 @@ class Cube
     @hist << "fr"
     self
   end
+  #Turns front face twice
+  def f2
+    self.f.f
+    @hist << 'f2'
+    self
+  end
 
+  #Turns back face clockwise
   def b
     cubetemp = Marshal.load(Marshal.dump(@cube))
 
@@ -225,6 +229,7 @@ class Cube
     @cube = Marshal.load(Marshal.dump(cubetemp))
     self
   end
+  #Turns back face counter-clockwise
   def br
     3.times do 
       self.b
@@ -233,7 +238,14 @@ class Cube
     @hist << "br"
     self
   end
+  #Turns back face twice
+  def b2
+    self.b.b
+    @hist << 'b2'
+    self
+  end
 
+  #Turns top face clockwise
   def u
     cubetemp = Marshal.load(Marshal.dump(@cube))
 
@@ -266,6 +278,7 @@ class Cube
     @cube = Marshal.load(Marshal.dump(cubetemp))
     self  
   end
+  #turns top face counter-clockwise
   def ur
     3.times do 
       self.u
@@ -274,7 +287,14 @@ class Cube
     @hist << "ur"
     self
   end
+  #turns top face twice
+  def u2
+    self.u.u
+    @hist << 'u2'
+    self
+  end
 
+  #Turns bottom face clockwise
   def d
     cubetemp = Marshal.load(Marshal.dump(@cube))
 
@@ -307,6 +327,7 @@ class Cube
     @cube = Marshal.load(Marshal.dump(cubetemp))
     self
   end
+  #Turns bottom face counter-clockwise
   def dr
     3.times do 
       self.d
@@ -315,10 +336,14 @@ class Cube
     @hist << "dr"
     self
   end
+  #Turns bottom face twice
+  def d2
+    self.d.d
+    @hist << 'l2'
+    self
+  end
 
- 
-  #cube orientation motions
-
+  # Turns cube clockwise ONCE, like "u" but rest of cube moves too.
   def turn 
     cubetemp = [[],[],[],[],[],[]]
 
@@ -387,6 +412,7 @@ class Cube
     self
   end
 
+  #Turns cube over ONCE, like "fr" but rest of cube moves too.
   def turn_over 
     cubetemp = [[],[],[],[],[],[]]
 
@@ -454,37 +480,38 @@ class Cube
     self
   end
 
+  #Turns cube over TWICE, swapping top and bottom faces. Like "f2" but rest of cube moves too.
   def invert
     self.turn_over.turn_over
     @hist << "invert" 
     self
   end
 
-  #move combinations
-
+  #Shuffles cross cubies on top, doesn't affect lower layers but does shuffle top corners.
   def cross_shuffle
      self.f.u.r.ur.rr.fr
     self
   end
 
+  #Swaps [0][5] and [0][3]. Doesn't affect lower layers but does affect top corners.
   def cross_swap
     self.rr.u.u.r.u.rr.u.r.u
     self
   end
 
+  #Shuffles top corners without affecting lower layers or top cross.
   def top_corner_shuffle
     self.rr.u.l.ur.r.u.lr.ur
     self
   end
 
+  #Re-orients cubies of [0][4], [0][6], and [0][8] without affecting anything else.
   def last_move
     self.rr.d.d.r.f.d.d.fr.ur.f.d.d.fr.rr.d.d.r.u
     self
   end
 
-  ##-----SOLVER MOVES
-
-  #first layer
+  #Solves for cross on first layer. Affects all other layers. 
   def cross_solve 
     downcross = []
     i = 1
@@ -503,14 +530,14 @@ class Cube
       end
 
       until @cube[5][3] == cube[0][0]
-        #i =0
+        i =0
         self.d
 
-        #if i > 59 
-          #self.print
-          #gets
-          #end
-          #i+=1
+        if i > 59 
+          self.print
+          gets
+          end
+          i+=1
       end
 
       until @cube[0][7] != @cube[0][0]
@@ -541,6 +568,7 @@ class Cube
     self
   end
 
+  #Solves for corners on first layer without affecting first layer cross.
   def corners_solve
     corners = []
 
@@ -581,7 +609,7 @@ class Cube
     self
   end
 
-  #second layer
+  #Solves for middle layer when first layer is solved without affecting first layer.
   def second_layer_solve
     self.invert
     mids = []
@@ -619,7 +647,7 @@ class Cube
     self
   end
 
-  #last layer moves
+  #Solves for last layer cross when first two layers are completed
   def top_cross
      topcross = [@cube[0][1],@cube[0][3],@cube[0][5],@cube[0][7]]
     i = 1
@@ -671,6 +699,7 @@ class Cube
     self
   end
 
+  #Solves last layer corners when all other layers and cross have been completed.
   def top_corners
      stay_corner = [@cube[0][2], @cube[1][4],@cube[2][8]]
     i = 1
@@ -703,28 +732,32 @@ class Cube
     if @cube[0][4] == @cube[0][0] && @cube[0][6] != @cube[0][0]
       i = 1
 
-      until @cube.sort == [[0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1],[2,2,2,2,2,2,2,2,2],[3,3,3,3,3,3,3,3,3],[4,4,4,4,4,4,4,4,4],[5,5,5,5,5,5,5,5,5]]
 
-      self.last_move
-      i += 1
-      if i > 100
-        i = 1
-      end
+      testarray = [] 
+      until testarray.flatten.uniq.length == 6
+
+        @cube.each {|side| testarray << side.uniq}
+
+        self.last_move
+        i += 1
+        if i > 100
+          i = 1
+        end
       end
     end
   end
 
   #solve invokes all layer solving methods in sequence, solving from any legal state 
-  def solve
-    return self if @cube.sort == [[0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1],[2,2,2,2,2,2,2,2,2],[3,3,3,3,3,3,3,3,3],[4,4,4,4,4,4,4,4,4],[5,5,5,5,5,5,5,5,5]]
+  def simple_solve
+    testarray = [] 
+    @cube.each {|side| testarray << side.uniq}
+    return self if testarray.flatten.length == 6
 
     self.cross_solve.corners_solve.second_layer_solve.top_cross.top_corners
     self.clean_hist
     self.invert
     self
   end
-
-  ##TERMINAL OUTPUT METHODS
 
   #outputs each side as an array on its own line
   def show
@@ -736,20 +769,20 @@ class Cube
     p @cube[5]
   end
 
-  #colorizes numerals for output to terminal. NOTE: solver methods will not work on a colorized cube. (yet)
+  #Colorizes integers for output to terminal. 
   def colorize
     @cube.each do |this|
       this.collect! do |num|
         if num == 1
-          num = num.to_s.orange
+          num = "\e[36m#{num}\e[0m"
         elsif num == 2
-          num = num.to_s.yellow
+          num = "\e[33m#{num}\e[0m"
         elsif num ==3
-          num = num.to_s.red
+          num = "\e[31m#{num}\e[0m"
         elsif num == 4
-          num = num.to_s.green
+          num = "\e[32m#{num}\e[0m"
         elsif num ==5 
-          num = num.to_s.blue
+          num = "\e[34m#{num}\e[0m"
         else
           num = num
         end
@@ -758,17 +791,22 @@ class Cube
     self
   end
 
-  #doesn't work yet
-  def decolor
-    @cube.each do |this|
-      this.collect! do |num|
-        num = num.to_s.match(/[0-9]/).to_s.to_i
-        puts "wooo"
+  #Converts colorized cube back to integers
+  def decolorize
+    if @cube.flatten.include?(5) == false
+      @cube.each do |this|
+        this.collect! do |num|
+          if num == 0
+            num = num
+          else
+            num = num.gsub(/[^\d]/, '')[2].to_i if num.class == String
+          end
+        end
       end
     end
   end
 
-  #outputs an ascii representation of the cube
+  #Outputs an ascii representation of the cube arrays
   def print
     puts "                    ---------"
     puts "                    |#{@cube[1][8]}||#{@cube[1][1]}||#{@cube[1][2]}|"
@@ -793,11 +831,4 @@ class Cube
     puts "                    ---------"
   end
   self
-end
-loop do
-
-x = Cube.new.scramble
-x.solve
-p x.hist.length
-
 end
