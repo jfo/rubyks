@@ -1,4 +1,10 @@
-require_relative "rubyks"
+#!usr/bin/env ruby
+
+
+
+require_relative "lib/rubyks"
+
+
 
 system ("clear")
 
