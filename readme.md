@@ -16,12 +16,12 @@ DATA STRUCTURE:
 
 The @cube attribute contains 6 arrays of 8 elements, each array describes one side of the cube like so:
 
-  @cube[0] - top
-  @cube[1] - left
-  @cube[2] - back
-  @cube[3] - right
-  @cube[4] - front
-  @cube[5] - bottom
+    @cube[0] - top
+    @cube[1] - left
+    @cube[2] - back
+    @cube[3] - right
+    @cube[4] - front
+    @cube[5] - bottom
 
 The first element @cube[x][0] in any array describes the center square of that face, and remains static in relation to the other sides, just as a real cube's center square would. 
 
