@@ -836,7 +836,3 @@ class Cube
   end
   self
 end
-
-
-x = Cube.new
-x.scramble.simple_solve.colorize.print
