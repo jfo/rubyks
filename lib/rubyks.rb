@@ -701,7 +701,7 @@ class Cube
 
   #Solves last layer corners when all other layers and cross have been completed.
   def top_corners
-     stay_corner = [@cube[0][2], @cube[1][4],@cube[2][8]]
+    stay_corner = [@cube[0][2], @cube[1][4],@cube[2][8]]
     i = 1
 
     until stay_corner.sort == [@cube[1][0],@cube[2][0],@cube[0][0]].sort
@@ -744,6 +744,10 @@ class Cube
           i = 1
         end
       end
+    end
+
+    if @cube[0][6] != @cube[0][0]
+      self.last_move
     end
   end
 
@@ -832,3 +836,7 @@ class Cube
   end
   self
 end
+
+
+x = Cube.new
+x.scramble.simple_solve.colorize.print
