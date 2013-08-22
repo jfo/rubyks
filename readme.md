@@ -7,7 +7,7 @@ More info is in the "help" command in interface.rb.
 
 Below find information on how the data is formatted, refer to the documentation for a list of methods. Normal cube nomenclature can be used, with the exception of x' to mean reverse- simply replace the apostrophe with an "r".
 
-I have included a set of solver methods that work almost every time. Very occasionally, my "simple_solve" gets stuck in a loop or returns a cube with transposed cubies. I would love to find out why!
+I have included a set of solver methods that work every time, although pretty ineffciently. If you come across an edge case, please let me know!
 
 It's my hope that some people will use this nomenclature to write more efficient solving algorithms than mine. My intent was to reproduce my own thought process when solving, and I am not a speedcuber, I just know one basic way to solve the cube and wanted to see if I could make my program run that same routine (more or less).  
 
