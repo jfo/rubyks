@@ -14,7 +14,7 @@ It's my hope that some people will use this nomenclature to write more efficient
 
 DATA STRUCTURE:
 
-The @cube attribute contains 6 arrays of 8 elements, each array describes one side of the cube like so:
+The @cube attribute contains 6 arrays of 9 elements, each array describes one side of the cube like so:
 
     @cube[0] - top
     @cube[1] - left
