@@ -1,6 +1,6 @@
 [![Gem Version](https://badge.fury.io/rb/rubyks.png)](http://badge.fury.io/rb/rubyks)
 
-This is a software model of a Rubik's cube, providing a dynamic data structure with which to describe the state and orientation of any cube in any legal position. 
+This is a software model of a Rubik's cube, providing a dynamic data structure with which to describe the state and orientation of any standard 3x3x3 cube in any legal position. 
 
 The little helper program "interface" provides a simple ascii graphical way to interact with a cube. You can also manipulate the cube move by move and get immediate feedback.
 More info is in the "help" command in interface.rb.
