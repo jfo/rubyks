@@ -9,4 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ["jeff@jeffalanfowler.com"]
   s.homepage    = "http://github.com/urthbound/rubyks"
   s.files       = ["lib/rubyks.rb"]
+
+  s.add_development_dependency 'rspec'
+
 end
