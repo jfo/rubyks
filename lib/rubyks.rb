@@ -34,13 +34,8 @@ class Cube
   #Scrambles cube with 100 random moves and clears history
   def scramble
     100.times do 
-      turn = rand(5)
-      self.l if turn == 0
-      self.r if turn == 1
-      self.u if turn == 2
-      self.d if turn == 3
-      self.f if turn == 4
-      self.b if turn == 5
+      move = [:l, :r, :u, :d, :f, :b].sample
+      self.send(move)
     end
     @hist = []
     self 
