@@ -760,12 +760,10 @@ class Cube
 
   #outputs each side as an array on its own line
   def show
-    p @cube[0]
-    p @cube[1]
-    p @cube[2]
-    p @cube[3]
-    p @cube[4]
-    p @cube[5]
+    (0..5).each do |side|
+      p @cube[side]
+    end
+    return
   end
 
   #Colorizes integers for output to terminal. 
