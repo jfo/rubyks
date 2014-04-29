@@ -22,7 +22,7 @@ class Cube
   def clean_hist
     i = 0
     until i == @hist.length
-      if @hist[i] == @hist[i+1] && @hist[i] == @hist[i+2] && @hist[i] == @hist[i+3]
+      if @hist.values_at(i..i+3).uniq.length == 1
         4.times {@hist.delete_at(i)}
         i = -1
       end
@@ -690,7 +690,10 @@ class Cube
       if i > 20
         self.turn
       end
-      topcross = [@cube[0][1],@cube[0][3],@cube[0][5],@cube[0][7]]
+      topcross = [@cube[0][1],
+                  @cube[0][3],
+                  @cube[0][5],
+                  @cube[0][7]]
     end
     i = 1
     until @cube[1][5] == @cube[1][0] && @cube[4][3] == @cube[4][0]
