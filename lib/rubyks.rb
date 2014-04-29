@@ -708,21 +708,23 @@ class Cube
 
   #Colorizes integers for output to terminal.
   def colorize
-    @cube.each do |this|
-      this.collect! do |num|
-        if num == 1
-          num = "\e[36m#{num}\e[0m"
-        elsif num == 2
-          num = "\e[33m#{num}\e[0m"
-        elsif num ==3
-          num = "\e[31m#{num}\e[0m"
-        elsif num == 4
-          num = "\e[32m#{num}\e[0m"
-        elsif num ==5
-          num = "\e[34m#{num}\e[0m"
-        else
-          num = num
-        end
+    @cube.each do |side|
+      side.collect! do |num|
+        color = case num
+                when 0
+                  37
+                when 1
+                  36
+                when 2
+                  33
+                when 3
+                  31
+                when 4
+                  32
+                when 5
+                  34
+                end
+        "\e[#{color}m#{num}\e[0m"
       end
     end
     self
