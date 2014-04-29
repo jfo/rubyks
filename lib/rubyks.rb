@@ -56,36 +56,24 @@ class Cube
   def l
     cubetemp = Marshal.load(Marshal.dump(@cube))
 
-    cubetemp[0][1] = @cube[2][1]
-    cubetemp[0][2] = @cube[2][2]
-    cubetemp[0][8] = @cube[2][8]
+    [[0, 2], [2, 5], [5, 4], [4,0]].each do |flip|
+      [1, 2, 8].each do |x|
+        cubetemp[flip.first][x] = @cube[flip.last][x]
+      end
+    end
 
-    cubetemp[2][1] = @cube[5][1]
-    cubetemp[2][2] = @cube[5][2]
-    cubetemp[2][8] = @cube[5][8]
+    (1..8).each do |n|
+      x = (n + 6)
+      x -= 8 if x > 8
 
-    cubetemp[5][1] = @cube[4][1]
-    cubetemp[5][2] = @cube[4][2]
-    cubetemp[5][8] = @cube[4][8]
-
-    cubetemp[4][1] = @cube[0][1]
-    cubetemp[4][2] = @cube[0][2]
-    cubetemp[4][8] = @cube[0][8]
-
-
-    cubetemp[1][1] = @cube[1][7]
-    cubetemp[1][2] = @cube[1][8]
-    cubetemp[1][3] = @cube[1][1]
-    cubetemp[1][4] = @cube[1][2]
-    cubetemp[1][5] = @cube[1][3]
-    cubetemp[1][6] = @cube[1][4]
-    cubetemp[1][7] = @cube[1][5]
-    cubetemp[1][8] = @cube[1][6]
+      cubetemp[1][n] = @cube[1][x]
+    end
 
     @cube = Marshal.load(Marshal.dump(cubetemp))
     @hist << 'l'
     self
   end
+
   #Turns left face counter-clockwise
   def lr
     3.times do
