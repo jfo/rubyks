@@ -55,20 +55,8 @@ class Cube
   #Turns left face clockwise
   def l
     cubetemp = Marshal.load(Marshal.dump(@cube))
-
-    [[0, 2], [2, 5], [5, 4], [4,0]].each do |flip|
-      [1, 2, 8].each do |x|
-        cubetemp[flip.first][x] = @cube[flip.last][x]
-      end
-    end
-
-    (1..8).each do |n|
-      x = (n + 6)
-      x -= 8 if x > 8
-
-      cubetemp[1][n] = @cube[1][x]
-    end
-
+    cubetemp = turn_sides([0,2,5,4],[1,2,8],cubetemp)
+    cubetemp = turn_face(1, cubetemp)
     @cube = Marshal.load(Marshal.dump(cubetemp))
     @hist << 'l'
     self
@@ -84,41 +72,20 @@ class Cube
     self
   end
   #Turns left face twice
+
   def l2
     self.l.l
     @hist << 'l2'
     self
   end
 
+
+
   #Turns right face clockwise
   def r
     cubetemp = Marshal.load(Marshal.dump(@cube))
-
-    cubetemp[0][4] = @cube[4][4]
-    cubetemp[0][5] = @cube[4][5]
-    cubetemp[0][6] = @cube[4][6]
-
-    cubetemp[4][4] = @cube[5][4]
-    cubetemp[4][5] = @cube[5][5]
-    cubetemp[4][6] = @cube[5][6]
-
-    cubetemp[5][4] = @cube[2][4]
-    cubetemp[5][5] = @cube[2][5]
-    cubetemp[5][6] = @cube[2][6]
-
-    cubetemp[2][4] = @cube[0][4]
-    cubetemp[2][5] = @cube[0][5]
-    cubetemp[2][6] = @cube[0][6]
-
-    cubetemp[3][1] = @cube[3][7]
-    cubetemp[3][2] = @cube[3][8]
-    cubetemp[3][3] = @cube[3][1]
-    cubetemp[3][4] = @cube[3][2]
-    cubetemp[3][5] = @cube[3][3]
-    cubetemp[3][6] = @cube[3][4]
-    cubetemp[3][7] = @cube[3][5]
-    cubetemp[3][8] = @cube[3][6]
-
+    cubetemp = turn_sides([0,4,5,2],[4,5,6],cubetemp)
+    cubetemp = turn_face(3, cubetemp)
     @hist << 'r'
     @cube = Marshal.load(Marshal.dump(cubetemp))
     self
@@ -159,14 +126,7 @@ class Cube
     cubetemp[3][7] = @cube[0][7]
     cubetemp[3][6] = @cube[0][6]
 
-    cubetemp[4][1] = @cube[4][7]
-    cubetemp[4][2] = @cube[4][8]
-    cubetemp[4][3] = @cube[4][1]
-    cubetemp[4][4] = @cube[4][2]
-    cubetemp[4][5] = @cube[4][3]
-    cubetemp[4][6] = @cube[4][4]
-    cubetemp[4][7] = @cube[4][5]
-    cubetemp[4][8] = @cube[4][6]
+    cubetemp = turn_face(4, cubetemp)
 
     @hist << 'f'
     @cube = Marshal.load(Marshal.dump(cubetemp))
@@ -209,15 +169,7 @@ class Cube
     cubetemp[5][8] = @cube[1][4]
 
 
-
-    cubetemp[2][1] = @cube[2][7]
-    cubetemp[2][2] = @cube[2][8]
-    cubetemp[2][3] = @cube[2][1]
-    cubetemp[2][4] = @cube[2][2]
-    cubetemp[2][5] = @cube[2][3]
-    cubetemp[2][6] = @cube[2][4]
-    cubetemp[2][7] = @cube[2][5]
-    cubetemp[2][8] = @cube[2][6]
+    cubetemp = turn_face(2, cubetemp)
 
     @hist << 'b'
     @cube = Marshal.load(Marshal.dump(cubetemp))
@@ -259,14 +211,7 @@ class Cube
     cubetemp[2][7] = @cube[1][5]
     cubetemp[2][8] = @cube[1][6]
 
-    cubetemp[0][1] = @cube[0][7]
-    cubetemp[0][2] = @cube[0][8]
-    cubetemp[0][3] = @cube[0][1]
-    cubetemp[0][4] = @cube[0][2]
-    cubetemp[0][5] = @cube[0][3]
-    cubetemp[0][6] = @cube[0][4]
-    cubetemp[0][7] = @cube[0][5]
-    cubetemp[0][8] = @cube[0][6]
+    cubetemp = turn_face(0, cubetemp)
 
     @hist << 'u'
     @cube = Marshal.load(Marshal.dump(cubetemp))
@@ -308,14 +253,7 @@ class Cube
     cubetemp[4][7] = @cube[1][1]
     cubetemp[4][8] = @cube[1][2]
 
-    cubetemp[5][1] = @cube[5][7]
-    cubetemp[5][2] = @cube[5][8]
-    cubetemp[5][3] = @cube[5][1]
-    cubetemp[5][4] = @cube[5][2]
-    cubetemp[5][5] = @cube[5][3]
-    cubetemp[5][6] = @cube[5][4]
-    cubetemp[5][7] = @cube[5][5]
-    cubetemp[5][8] = @cube[5][6]
+    cubetemp = turn_face(5, cubetemp)
 
     @hist << 'd'
     @cube = Marshal.load(Marshal.dump(cubetemp))
@@ -830,6 +768,27 @@ class Cube
     puts "                    ---------"
   end
   self
+
+  private
+
+  def turn_sides(num_array, face_array, cubetemp)
+    num_array.zip(num_array.rotate).each do |flip|
+      face_array.each do |x|
+        cubetemp[flip.first][x] = @cube[flip.last][x]
+      end
+    end
+    cubetemp
+  end
+
+  def turn_face(num, cubetemp)
+    (1..8).each do |n|
+      x = (n + 6)
+      x -= 8 if x > 8
+      cubetemp[num][n] = @cube[num][x]
+    end
+    cubetemp
+  end
+
 end
 
 #This is a software model of a Rubik's cube, providing a dynamic data structure with which to describe the state and orientation of any cube in any legal position.
