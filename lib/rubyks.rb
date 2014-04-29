@@ -3,15 +3,26 @@ class Cube
 
   #New cubes are instantiated in a solved state with a clean history.
   def initialize
-    @cube = [[0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1],[2,2,2,2,2,2,2,2,2],[3,3,3,3,3,3,3,3,3],[4,4,4,4,4,4,4,4,4],[5,5,5,5,5,5,5,5,5]]
+    @cube = make_cube
     @hist = []
+  end
+
+  def make_cube
+    output = []
+    (0..5).each do |e|
+      output << []
+      9.times do
+        output.last << e
+      end
+    end
+    output
   end
 
   #Removes any 4 of the same move in a row in @hist. Any move repeated four times ends the cube in the state it started in.
   def clean_hist
     i = 0
     until i == @hist.length
-      if @hist[i] == @hist[i+1] && @hist[i] == @hist[i+2] && @hist[i] == @hist[i+3] 
+      if @hist[i] == @hist[i+1] && @hist[i] == @hist[i+2] && @hist[i] == @hist[i+3]
         4.times {@hist.delete_at(i)}
         i = -1
       end
@@ -29,7 +40,7 @@ class Cube
     end
 
     @hist.join(', ')
-  end 
+  end
 
   #Scrambles cube with 100 random moves and clears history
   def scramble
@@ -38,7 +49,7 @@ class Cube
       self.send(move)
     end
     @hist = []
-    self 
+    self
   end
 
   #Turns left face clockwise
@@ -77,7 +88,7 @@ class Cube
   end
   #Turns left face counter-clockwise
   def lr
-    3.times do 
+    3.times do
       self.l
       @hist.pop
     end
@@ -126,7 +137,7 @@ class Cube
   end
   #Turns right face counter-clockwise
   def rr
-    3.times do 
+    3.times do
       self.r
       @hist.pop
     end
@@ -175,7 +186,7 @@ class Cube
   end
   #Turns front face counter-clockwise
   def fr
-    3.times do 
+    3.times do
       self.f
       @hist.pop
     end
@@ -226,7 +237,7 @@ class Cube
   end
   #Turns back face counter-clockwise
   def br
-    3.times do 
+    3.times do
       self.b
       @hist.pop
     end
@@ -271,11 +282,11 @@ class Cube
 
     @hist << 'u'
     @cube = Marshal.load(Marshal.dump(cubetemp))
-    self  
+    self
   end
   #turns top face counter-clockwise
   def ur
-    3.times do 
+    3.times do
       self.u
       @hist.pop
     end
@@ -324,7 +335,7 @@ class Cube
   end
   #Turns bottom face counter-clockwise
   def dr
-    3.times do 
+    3.times do
       self.d
       @hist.pop
     end
@@ -339,7 +350,7 @@ class Cube
   end
 
   # Turns cube clockwise ONCE, like "u" but rest of cube moves too.
-  def turn 
+  def turn
     cubetemp = [[],[],[],[],[],[]]
 
     cubetemp[0][0] = @cube[0][0]
@@ -408,7 +419,7 @@ class Cube
   end
 
   #Turns cube over ONCE, like "fr" but rest of cube moves too.
-  def turn_over 
+  def turn_over
     cubetemp = [[],[],[],[],[],[]]
 
     cubetemp[0][0] = @cube[3][0]
@@ -478,7 +489,7 @@ class Cube
   #Turns cube over TWICE, swapping top and bottom faces. Like "f2" but rest of cube moves too.
   def invert
     self.turn_over.turn_over
-    @hist << "invert" 
+    @hist << "invert"
     self
   end
 
@@ -506,20 +517,20 @@ class Cube
     self
   end
 
-  #Solves for cross on first layer. Affects all other layers. 
-  def cross_solve 
+  #Solves for cross on first layer. Affects all other layers.
+  def cross_solve
     downcross = []
     i = 1
     until @cube[0][1] == @cube[0][0] && @cube[0][3] == @cube[0][0]  && @cube[0][5] == @cube[0][0] && @cube[0][7] == @cube[0][0]
-         
-      until downcross.include?(@cube[0][0]) 
+
+      until downcross.include?(@cube[0][0])
          downcross = []
          self.rr.d.r.l.dr.lr.turn
          downcross = [@cube[5][1],@cube[5][3],@cube[5][5], @cube[5][7]]
          i += 1
          if i > 10
-           self.turn until @cube[0][1] != @cube[0][0] 
-           self.l.b 
+           self.turn until @cube[0][1] != @cube[0][0]
+           self.l.b
            i = 1
          end
       end
@@ -528,7 +539,7 @@ class Cube
         i =0
         self.d
 
-        if i > 59 
+        if i > 59
           self.print
           gets
           end
@@ -543,13 +554,13 @@ class Cube
     end
 
     until @cube[4][3] == @cube[4][0] && @cube[1][5] == @cube[1][0]
-      until @cube[1][5] == @cube[1][0]        
+      until @cube[1][5] == @cube[1][0]
         self.u
       end
       self.turn if @cube[4][3] != @cube[4][0]
       i += 1
 
-      if i > 10   
+      if i > 10
         self.cross_swap
         i = 1
       end
@@ -576,8 +587,8 @@ class Cube
         self.rr.d.r.turn
         corners = [@cube[1][8],@cube[1][2],@cube[2][4],@cube[2][2],@cube[3][4],@cube[3][6],@cube[4][6],@cube[4][8]]
       end
-      
-      until @cube[3][6] == @cube[0][0] || @cube[4][6] == @cube[0][0] 
+
+      until @cube[3][6] == @cube[0][0] || @cube[4][6] == @cube[0][0]
         self.d
       end
 
@@ -615,7 +626,7 @@ class Cube
       until @cube[4][5] == @cube[4][0] && @cube[3][7] == @cube[3][0]
       i = 0
 
-        until @cube[4][3] != @cube[0][0] && @cube[0][7] != @cube[0][0] 
+        until @cube[4][3] != @cube[0][0] && @cube[0][7] != @cube[0][0]
           self.u
           i += 1
 
@@ -666,10 +677,10 @@ class Cube
     end
 
     if (topcross[0] == @cube[0][0] && topcross[2] == @cube[0][0]) || (topcross[1] == @cube[0][0] && topcross[3] == @cube[0][0])
-      self.turn until @cube[0][7] == @cube[0][0] 
+      self.turn until @cube[0][7] == @cube[0][0]
       self.cross_swap
     end
-    
+
     self.turn until @cube[0][1] == @cube[0][0] && @cube[0][3] == @cube[0][0]
 
     i = 1
@@ -685,7 +696,7 @@ class Cube
     until @cube[1][5] == @cube[1][0] && @cube[4][3] == @cube[4][0]
       self.u
       i += 1
-      if i >17 
+      if i >17
         self.cross_swap.turn.cross_swap
         i = 1
       end
@@ -710,14 +721,14 @@ class Cube
         stay_corner = [@cube[0][2], @cube[1][4],@cube[2][8]]
       end
     end
-    
+
     until @cube[0][2] == @cube[0][0]
       self.turn.turn.last_move.turn.turn
     end
 
     stay4 = [@cube[0][4], @cube[2][6],@cube[3][2]]
     until stay4.sort == [@cube[2][0],@cube[3][0],@cube[0][0]].sort
-      
+
     self.top_corner_shuffle
       stay4 = [@cube[0][4], @cube[2][6],@cube[3][2]]
     end
@@ -728,7 +739,7 @@ class Cube
       i = 1
 
 
-      testarray = [] 
+      testarray = []
       until testarray.flatten.uniq.length == 6
 
         @cube.each {|side| testarray << side.uniq}
@@ -746,9 +757,9 @@ class Cube
     end
   end
 
-  #solve invokes all layer solving methods in sequence, solving from any legal state 
+  #solve invokes all layer solving methods in sequence, solving from any legal state
   def simple_solve
-    testarray = [] 
+    testarray = []
     @cube.each {|side| testarray << side.uniq}
     return self if testarray.flatten.length == 6
 
@@ -766,7 +777,7 @@ class Cube
     return
   end
 
-  #Colorizes integers for output to terminal. 
+  #Colorizes integers for output to terminal.
   def colorize
     @cube.each do |this|
       this.collect! do |num|
@@ -778,7 +789,7 @@ class Cube
           num = "\e[31m#{num}\e[0m"
         elsif num == 4
           num = "\e[32m#{num}\e[0m"
-        elsif num ==5 
+        elsif num ==5
           num = "\e[34m#{num}\e[0m"
         else
           num = num
@@ -830,11 +841,11 @@ class Cube
   self
 end
 
-#This is a software model of a Rubik's cube, providing a dynamic data structure with which to describe the state and orientation of any cube in any legal position. 
+#This is a software model of a Rubik's cube, providing a dynamic data structure with which to describe the state and orientation of any cube in any legal position.
 #
 #I have included a set of solver methods that work every time, although pretty inefficiently. If you come across an edge case, please let me know!
 #
-#It's my hope that some people will use this nomenclature to write more efficient solving algorithms than mine. My intent was to reproduce my own thought process when solving, and I am not a speedcuber, I just know one basic way to solve the cube and wanted to see if I could make my program run that same routine (more or less).  
+#It's my hope that some people will use this nomenclature to write more efficient solving algorithms than mine. My intent was to reproduce my own thought process when solving, and I am not a speedcuber, I just know one basic way to solve the cube and wanted to see if I could make my program run that same routine (more or less).
 #
 #
 #DATA STRUCTURE:
@@ -848,10 +859,10 @@ end
 #    @cube[4] - front
 #    @cube[5] - bottom
 #
-#The first element @cube[x][0] in any array describes the center square of that face, and remains static in relation to the other sides, just as a real cube's center square would. 
+#The first element @cube[x][0] in any array describes the center square of that face, and remains static in relation to the other sides, just as a real cube's center square would.
 #
 #The remaining array elements from [1] - [8] start at "12 o'clock" and move clockwise. Thus: Even numbers are middle cubies and odd numbers are always corner cubies.
-#      
+#
 #      |8|1|2|
 #      |7|0|3|
 #      |6|5|4|
