@@ -110,21 +110,10 @@ class Cube
   def f
     cubetemp = Marshal.load(Marshal.dump(@cube))
 
-    cubetemp[0][6] = @cube[1][6]
-    cubetemp[0][7] = @cube[1][7]
-    cubetemp[0][8] = @cube[1][8]
-
-    cubetemp[1][6] = @cube[5][2]
-    cubetemp[1][7] = @cube[5][3]
-    cubetemp[1][8] = @cube[5][4]
-
-    cubetemp[5][2] = @cube[3][6]
-    cubetemp[5][3] = @cube[3][7]
-    cubetemp[5][4] = @cube[3][8]
-
-    cubetemp[3][8] = @cube[0][8]
-    cubetemp[3][7] = @cube[0][7]
-    cubetemp[3][6] = @cube[0][6]
+    transpose_cube_value(0, [6, 7, 8], 1, [6, 7, 8])
+    transpose_cube_value(1, [6, 7, 8], 5, [2, 3, 4])
+    transpose_cube_value(5, [2, 3, 4], 3, [6, 7, 8])
+    transpose_cube_value(3, [8, 7, 6], 0, [8, 7, 6])
 
     cubetemp = turn_face(4, cubetemp)
 
@@ -152,22 +141,10 @@ class Cube
   def b
     cubetemp = Marshal.load(Marshal.dump(@cube))
 
-    cubetemp[0][2] = @cube[3][2]
-    cubetemp[0][3] = @cube[3][3]
-    cubetemp[0][4] = @cube[3][4]
-
-    cubetemp[1][2] = @cube[0][2]
-    cubetemp[1][3] = @cube[0][3]
-    cubetemp[1][4] = @cube[0][4]
-
-    cubetemp[3][2] = @cube[5][6]
-    cubetemp[3][3] = @cube[5][7]
-    cubetemp[3][4] = @cube[5][8]
-
-    cubetemp[5][6] = @cube[1][2]
-    cubetemp[5][7] = @cube[1][3]
-    cubetemp[5][8] = @cube[1][4]
-
+    transpose_cube_value(0, [2, 3, 4], 3, [2, 3, 4])
+    transpose_cube_value(1, [2, 3, 4], 0, [2, 3, 4])
+    transpose_cube_value(3, [2, 3, 4], 5, [6, 7, 8])
+    transpose_cube_value(5, [6, 7, 8], 5, [2, 3, 4])
 
     cubetemp = turn_face(2, cubetemp)
 
@@ -194,22 +171,11 @@ class Cube
   #Turns top face clockwise
   def u
     cubetemp = Marshal.load(Marshal.dump(@cube))
-
-    cubetemp[1][4] = @cube[4][2]
-    cubetemp[1][5] = @cube[4][3]
-    cubetemp[1][6] = @cube[4][4]
-
-    cubetemp[4][2] = @cube[3][8]
-    cubetemp[4][3] = @cube[3][1]
-    cubetemp[4][4] = @cube[3][2]
-
-    cubetemp[3][8] = @cube[2][6]
-    cubetemp[3][1] = @cube[2][7]
-    cubetemp[3][2] = @cube[2][8]
-
-    cubetemp[2][6] = @cube[1][4]
-    cubetemp[2][7] = @cube[1][5]
-    cubetemp[2][8] = @cube[1][6]
+    
+    transpose_cube_value(1, [4, 5, 6], 4, [2, 3, 4])
+    transpose_cube_value(4, [2, 3, 4], 3, [8, 1, 2])
+    transpose_cube_value(3, [8, 1, 2], 2, [6, 7, 8])
+    transpose_cube_value(2, [6, 7, 8], 1, [4, 5, 6])
 
     cubetemp = turn_face(0, cubetemp)
 
@@ -237,21 +203,10 @@ class Cube
   def d
     cubetemp = Marshal.load(Marshal.dump(@cube))
 
-    cubetemp[1][8] = @cube[2][2]
-    cubetemp[1][1] = @cube[2][3]
-    cubetemp[1][2] = @cube[2][4]
-
-    cubetemp[2][2] = @cube[3][4]
-    cubetemp[2][3] = @cube[3][5]
-    cubetemp[2][4] = @cube[3][6]
-
-    cubetemp[3][4] = @cube[4][6]
-    cubetemp[3][5] = @cube[4][7]
-    cubetemp[3][6] = @cube[4][8]
-
-    cubetemp[4][6] = @cube[1][8]
-    cubetemp[4][7] = @cube[1][1]
-    cubetemp[4][8] = @cube[1][2]
+    transpose_cube_value(1, [8, 1, 2], 2, [2, 3, 4])
+    transpose_cube_value(2, [2, 3, 4], 3, [4, 5, 6])
+    transpose_cube_value(3, [4, 5, 6], 4, [6, 7, 8])
+    transpose_cube_value(4, [6, 7, 8], 1, [8, 1, 2])
 
     cubetemp = turn_face(5, cubetemp)
 
@@ -773,6 +728,13 @@ class Cube
 
   private
 
+  def transpose_cube_value(to_face, to_position, from_face, from_position, cubetemp)
+    (0..2).each do |pos|
+      cubetemp[to_face][to_position[pos]] = @cube[from_face][from_position[pos]]
+    end
+    cubetemp 
+  end
+    
   def turn_sides(num_array, face_array, cubetemp)
     num_array.zip(num_array.rotate).each do |flip|
       face_array.each do |x|
